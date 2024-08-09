@@ -5,6 +5,7 @@
 
 namespace Ui {
 class SettingUI;
+class SubGeneral;
 }
 
 class SettingUI : public QWidget
@@ -20,6 +21,7 @@ private:
 
 private:
     Ui::SettingUI *ui;
+    Ui::SubGeneral *uiSubGeneral;
 };
 
 #endif // SETTINGUI_H
