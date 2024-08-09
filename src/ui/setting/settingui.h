@@ -2,10 +2,13 @@
 #define SETTINGUI_H
 
 #include <QWidget>
+#include <qboxlayout.h>
 
 namespace Ui {
 class SettingUI;
 class SubGeneral;
+class SubUpdate;
+class SubAbout;
 }
 
 class SettingUI : public QWidget
@@ -22,6 +25,8 @@ private:
 private:
     Ui::SettingUI *ui;
     Ui::SubGeneral *uiSubGeneral;
+    Ui::SubUpdate *uiSubUpdate;
+    Ui::SubAbout *uiSubAbout;
 };
 
 #endif // SETTINGUI_H

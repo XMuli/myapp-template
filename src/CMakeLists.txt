@@ -155,6 +155,8 @@ message("-->qm_files: ${qm_files}")
 
 add_executable(${project_name}
     ${src_files}
+    ui/setting/sub_update.ui
+    ui/setting/sub_about.ui
 )
 
 target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
