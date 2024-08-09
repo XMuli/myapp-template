@@ -3,5 +3,6 @@
         <file>images/find.svg</file>
         <file>images/reset.svg</file>
         <file>images/update.svg</file>
+        <file>logo/logo.svg</file>
     </qresource>
 </RCC>

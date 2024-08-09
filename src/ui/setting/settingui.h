@@ -16,6 +16,9 @@ public:
     ~SettingUI();
 
 private:
+    void initUI();
+
+private:
     Ui::SettingUI *ui;
 };
 

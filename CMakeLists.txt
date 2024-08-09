@@ -4,7 +4,7 @@
 # SPDX-Author: XMuli <xmulitech@gmail.com>
 
 cmake_minimum_required(VERSION 3.5)
-project(myproject-template)
+project(myapp-template)
 
 #add_subdirectory(tripartite/QHotkey)  # 三方库置顶，避免被下面统一的路径修改所干扰
 
