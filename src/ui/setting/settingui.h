@@ -23,10 +23,10 @@ private:
     void initUI();
 
 private:
-    Ui::SettingUI *ui;
+    Ui::SettingUI  *ui;
     Ui::SubGeneral *uiSubGeneral;
-    Ui::SubUpdate *uiSubUpdate;
-    Ui::SubAbout *uiSubAbout;
+    Ui::SubUpdate  *uiSubUpdate;
+    Ui::SubAbout   *uiSubAbout;
 };
 
 #endif // SETTINGUI_H

@@ -12,3 +12,9 @@ MainWin::~MainWin()
 {
     delete ui;
 }
+
+void MainWin::on_pushButton_released()
+{
+
+}
+

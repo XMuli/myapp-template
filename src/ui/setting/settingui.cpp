@@ -33,9 +33,7 @@ void SettingUI::initUI()
     uiSubAbout->setupUi(ui->aboutDlg);
 
 
-    // ui->labProject->setText(QString("%1").arg(XPROJECT_NAME));
-    // ui->labBit->setText(tr("%1-bit").arg(XARCH_BIT));
-    // ui->labVersion->setText(tr("Version %1 (%2) - %3 %4").arg(XPROJECT_VERSION).arg(XBUILD_TIME).arg(XCOMPILER).arg(XCOMPILER_ID));
-
-
+    uiSubAbout->labProject->setText(QString("%1").arg(XPROJECT_NAME));
+    uiSubAbout->labBit->setText(tr("%1-bit").arg(XARCH_BIT));
+    uiSubAbout->labVersion->setText(tr("Version %1 (%2) - %3 %4").arg(XPROJECT_VERSION).arg(XBUILD_TIME).arg(XCOMPILER).arg(XCOMPILER_ID));
 }

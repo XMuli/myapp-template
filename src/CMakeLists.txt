@@ -47,6 +47,11 @@ set(src_files
     resources/logo/resources.rc        # Exe 在大图模式和窗口标题栏都指定 logo 图片
 )
 
+
+
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_general.h" "sub_general.ui")
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_update.h" "sub_update.ui")
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_about.h" "sub_about.ui")
 #********************************************** 判断且定义 x64/x86 变量 (get kit architecture bit) ****************************
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
     set(arch_bit "86")
