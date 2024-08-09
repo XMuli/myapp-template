@@ -4,5 +4,6 @@
         <file>images/reset.svg</file>
         <file>images/update.svg</file>
         <file>logo/logo.svg</file>
+        <file>logo/logo.png</file>
     </qresource>
 </RCC>

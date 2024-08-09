@@ -1,5 +1,16 @@
 
 
+## \*.ui 单独编译为 ui_\*.h 文件于 CMake
+
+```cmake
+list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "ui/setting")  # 添加此行
+
+# 将单独的 .ui 文件编译为 ui_*.h 文件
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_general.h" "sub_general.ui")
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_update.h" "sub_update.ui")
+execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_about.h" "sub_about.ui")
+```
+
 
 
 ## Qt Design Guide

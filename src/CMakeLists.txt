@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2024-20xx XMuli
+# SPDX-FileCopyrightText: 2024-2024 XMuli
 # SPDX-GitHub: https://github.com/XMuli
 # SPDX-Author: XMuli <xmulitech@gmail.com>
 
@@ -19,8 +19,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "ui/setting")
-
 
 set(qt_moduls Widgets)    # Network Multimedia WebSockets Xml Svg Network Charts 是区分大小写
 set(qt_version_moduls)
@@ -31,8 +29,21 @@ endforeach()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_moduls} LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTools) # LinguistTools No link
 
+
+set(basics_files
+    basics/isingleton.h
+
+    # basics/configjson.h
+    # basics/configjson.cpp
+    # basics/communication.h
+    # basics/communication.cpp
+)
+
 set(src_files
     main.cpp
+
+    ui/tray/tray.h
+    ui/tray/tray.cpp
 
     ui/main/mainwin.h
     ui/main/mainwin.cpp
@@ -42,16 +53,13 @@ set(src_files
     ui/setting/settingui.cpp
     ui/setting/settingui.ui
     ui/setting/sub_general.ui
+    ui/setting/sub_update.ui
+    ui/setting/sub_about.ui
 
     resources/resources.qrc
     resources/logo/resources.rc        # Exe 在大图模式和窗口标题栏都指定 logo 图片
 )
 
-
-
-execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_general.h" "sub_general.ui")
-execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_update.h" "sub_update.ui")
-execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_about.h" "sub_about.ui")
 #********************************************** 判断且定义 x64/x86 变量 (get kit architecture bit) ****************************
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
     set(arch_bit "86")
@@ -89,19 +97,7 @@ else()
     endif()
 endif()
 
-message("Qt5_DIR:" ${Qt5_DIR})
-message("qt_binray_dir:" ${qt_binray_dir})
-message("windeployqt:" ${windeployqt})
-message("lupdate_path:" ${lupdate_path})
-message("lrelease_path:" ${lrelease_path})
-message("EXECUTABLE_OUTPUT_PATH:" ${EXECUTABLE_OUTPUT_PATH})
-message("CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR})
-message("CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
-message("CMAKE_RUNTIME_OUTPUT_DIRECTORY: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-message("CMAKE_RUNTIME_OUTPUT_DIRECTORY: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")         # exe 和 dll 运行的输出路径
-message("CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")         # 动态链接库（DLL、SO 等）的输出目录(实际不生效)
-message("CMAKE_ARCHIVE_OUTPUT_DIRECTORY： ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")         # 静态库的输出目录
-#************************************************* 拷贝 .ini 和资源文件 *******************************************************
+#************************************************* 拷贝 .json 和资源文件 *******************************************************
 # copy "resources" 文件夹下的指定文件夹
 # set(folders_to_copy "licenses" "logo" "cpack")
 # set(source_root "${CMAKE_CURRENT_SOURCE_DIR}/resources")
@@ -141,7 +137,7 @@ foreach(it ${ts_files})
     list(APPEND ts_files_name ${ts_filename})
 endforeach()
 
-##编译时更新 .ts 和生成 .qm, # 命令参数问题：确保命令的参数传递方式正确。有时候在使用 execute_process 时，参数的传递需要一些特殊的格式，比如将参数放到列表中传递。
+# 编译时更新 .ts 和生成 .qm, # 命令参数问题：确保命令的参数传递方式正确。有时候在使用 execute_process 时，参数的传递需要一些特殊的格式，比如将参数放到列表中传递。
 foreach(it ${ts_files_name})
     # execute_process(COMMAND "${lupdate_path}" -locations none -no-obsolete "${CMAKE_CURRENT_SOURCE_DIR}" -ts "${ts_dir}/${it}.ts")
     execute_process(COMMAND "${lrelease_path}" "${ts_dir}/${it}.ts" -qm "${qm_dir}/${it}.qm")
@@ -157,16 +153,10 @@ message("-->qm_files: ${qm_files}")
 # link_directories(${trage_runtime_output_dir})                                                    # ②添加链接库路径
 #***************************************************************************************************************************
 
-
-add_executable(${project_name}
-    ${src_files}
-    ui/setting/sub_update.ui
-    ui/setting/sub_about.ui
-)
-
+add_executable(${project_name} ${src_files} ${basics_files})
 target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
 
-#
+# 按实际目录结构显示项目结构
 set(src_root_path ${CMAKE_CURRENT_SOURCE_DIR})                                                 # default root path curr path （CMakeList.txt）
 # file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*")
 file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*.cpp" "${src_root_path}/*.h" "${src_root_path}/*.ui" "${src_root_path}/*.rc")
@@ -184,14 +174,26 @@ target_compile_definitions(${project_name} PRIVATE XARCH_BIT="${arch_bit}")
 target_compile_definitions(${project_name} PRIVATE XCOMPILER="${CMAKE_HOST_SYSTEM_PROCESSOR}")  # i386/i686/x86_64/unknown  Win: AMD64
 target_compile_definitions(${project_name} PRIVATE XCOMPILER_ID="${CMAKE_CXX_COMPILER_ID}")     # Clang/GCC/MSVC or GNU
 
-message("------------BRGIN------------")
+message("------------1. Qt install path, base build and generate macro------------")
+message("Qt5_DIR:" ${Qt5_DIR})
+message("qt_binray_dir:" ${qt_binray_dir})
+message("windeployqt:" ${windeployqt})
+message("lupdate_path:" ${lupdate_path})
+message("lrelease_path:" ${lrelease_path})
 message("[using qt_version_moduls] ${qt_version_moduls}" )
+message("EXECUTABLE_OUTPUT_PATH:" ${EXECUTABLE_OUTPUT_PATH})
+message("CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR})
+message("CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+message("CMAKE_RUNTIME_OUTPUT_DIRECTORY: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message("CMAKE_RUNTIME_OUTPUT_DIRECTORY: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")         # exe 和 dll 运行的输出路径
+message("CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")         # 动态链接库（DLL、SO 等）的输出目录(实际不生效)
+message("CMAKE_ARCHIVE_OUTPUT_DIRECTORY: ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")         # 静态库的输出目录
+message("------------2. project version. install path macro------------")
 message("XPROJECT_NAME:${project_name}")
 message("XPROJECT_VERSION:${project_version}")
 message("XARCH_BIT:${arch_bit}")
 message("XCOMPILER:${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("XCOMPILER_ID:${CMAKE_CXX_COMPILER_ID}")
-
 message("CMake Path:"
     "\nPROJECT_NAME:"  ${project_name}
     "\nCMAKE_INSTALL_PREFIX:"  ${CMAKE_INSTALL_PREFIX}
@@ -200,7 +202,6 @@ message("CMake Path:"
     "\nCMAKE_INSTALL_LIBDIR:"  ${CMAKE_INSTALL_LIBDIR}
     "\nCMAKE_INSTALL_INCLUDEDIR:"  ${CMAKE_INSTALL_INCLUDEDIR})
 message("------------END------------")
-
 
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)
@@ -214,6 +215,32 @@ set_target_properties(${project_name} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+#******************************************* 拷贝 ssl 和对应的 qt 依赖 *******************************************************
+if(APPLE)
+    #file(COPY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.3.dylib" DESTINATION "${EXECUTABLE_OUTPUT_PATH}")
+    #file(COPY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.3.dylib" DESTINATION "${exe_output_dir}")
+    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${EXECUTABLE_OUTPUT_PATH}/${project_name}.app" "-verbose=1")
+    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${EXECUTABLE_OUTPUT_PATH}/${project_name}.app" "-dmg")
+elseif(UNIX)
+elseif(WIN32)
+    # if(${is_x64bit})
+    #     set(ssl_dir "C:/Qt/Tools/OpenSSL/Win_x64/")
+    #     set(ssl_file "libssl-1_1-x64.dll" "libcrypto-1_1-x64.dll")
+    # else()
+    #     set(ssl_dir "C:/Qt/Tools/OpenSSL/Win_x86/")
+    #     set(ssl_file "libssl-1_1.dll" "libcrypto-1_1.dll")
+    # endif()
+
+    # foreach(it ${ssl_file})
+    #     file(COPY "${ssl_dir}/bin/${it}" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+    #     message("--->it:" "${ssl_dir}/bin/${it}")
+    # endforeach()
+
+    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${project_name}.exe" --no-opengl-sw --no-translations)
+endif()
+#****************************************************** 稚拙 Ununtu 22.04 的 .deb *********************************************************************
+
 
 include(GNUInstallDirs)
 install(TARGETS ${project_name}
