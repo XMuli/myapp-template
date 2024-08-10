@@ -35,8 +35,8 @@ set(basics_files
 
     # basics/configjson.h
     # basics/configjson.cpp
-    # basics/communication.h
-    # basics/communication.cpp
+    basics/communication.h
+    basics/communication.cpp
 )
 
 set(src_files
@@ -162,6 +162,7 @@ set(src_root_path ${CMAKE_CURRENT_SOURCE_DIR})                                  
 file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*.cpp" "${src_root_path}/*.h" "${src_root_path}/*.ui" "${src_root_path}/*.rc")
 source_group(TREE ${src_root_path} FILES ${source_lists})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/ui/include")                                    # 修复 Qt Design 使用提升自定义控件后， MinGW 找不到而编译失败; 且 MSVC 和 MinGW 使用提升时候，都不需要加上 相对路径
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/basics")
 # include_directories("${CMAKE_SOURCE_DIR}/tripartite/QHotkey")
 # include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/json")
 # include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/qt_aes")
@@ -215,6 +216,47 @@ set_target_properties(${project_name} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+# 获取 CPU 核心数量，开启 IDE 多核编译
+include(ProcessorCount)
+ProcessorCount(N)
+message("-->Number of available processor cores: ${N}")
+
+if(WIN32)
+    if(MSVC)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    elseif(MINGW)
+        set(CMAKE_MAKE_PROGRAM "${CMAKE_MAKE_PROGRAM} -j${N}")
+    endif()
+elseif(UNIX)
+    add_compile_options(-j${N})
+endif()
+
+
+if(MSVC)
+    # # 设置默认启动 project
+    # set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${project_name})
+    # # Fix: Visual Studio 2022 生成的目标文件的输出目录, 移除掉 Release/Debug 的多一层文件夹
+    # set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${trage_runtime_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "${trage_runtime_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${trage_runtime_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${trage_runtime_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${trage_archive_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${trage_archive_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL "${trage_archive_output_dir}")
+    # set_target_properties(${project_name} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO "${trage_archive_output_dir}")
+
+    # 开启 MSVC 终端上的中文不乱码
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
+    add_compile_options(/source-charset:utf-8 /execution-charset:utf-8)
+    # 开启 UNICODE 等常规
+    target_compile_definitions(${project_name} PRIVATE
+        WIN32_LEAN_AND_MEAN                                                                  # Header files containing only the common APIs
+        _CRT_SECURE_NO_WARNINGS                                                              # Unsafe functions such as strcpy, scanf, etc. are allowed)
+    )
+endif()
+
 
 #******************************************* 拷贝 ssl 和对应的 qt 依赖 *******************************************************
 if(APPLE)

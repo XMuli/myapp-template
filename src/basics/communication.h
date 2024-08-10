@@ -15,10 +15,14 @@ class Communication : public QObject
 {
     Q_OBJECT
 public:
-    static Communication &instance(); // signle
     void loadTranslation(const QString& language);
     QString toLocaleName(const QString& language);
     void trialVersion();
+    static Communication &instance(); // signle
+
+signals:
+    void sigLanguageChange(const QString qmFile);
+    void sigShowSystemMessagebox(const QString &title, const QString &msg, const int& msecs); // 系统消息通知
 
 private:
     explicit Communication(QObject *parent = nullptr);

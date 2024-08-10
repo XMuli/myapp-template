@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en_US">
 <context>
     <name>MainWin</name>
     <message>
@@ -36,6 +36,19 @@
     <message>
         <location filename="../ui/main/mainwin.ui" line="92"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../basics/communication.cpp" line="58"/>
+        <source>Your current version is outdated. Please download the latest version from &lt;a href=&apos;http://ecgview.xmuli.tech&apos;&gt;ecgview.xmuli.tech&lt;/a&gt; or contact developer at &lt;a href=&apos;mailto:xmulitech@gmail.com&apos;&gt;xmulitech@gmail.com&lt;/a&gt; for the download link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basics/communication.cpp" line="65"/>
+        <source>Version Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -208,6 +221,44 @@
     <message>
         <location filename="../ui/setting/sub_update.ui" line="240"/>
         <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Tray</name>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="96"/>
+        <source>this is my app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="97"/>
+        <source>function1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="98"/>
+        <source>function2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="99"/>
+        <source>Open Main Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="100"/>
+        <source>Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="101"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="102"/>
+        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -19,6 +19,9 @@ public:
     explicit SettingUI(QWidget *parent = nullptr);
     ~SettingUI();
 
+private slots:
+    void onLanguageChanged(const QString &arg1);
+
 private:
     void initUI();
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+﻿// SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2024-2024 XMuli
 // SPDX-GitHub: https://github.com/XMuli
 // SPDX-Author: XMuli <xmulitech@gmail.com>
@@ -38,6 +38,7 @@ void Communication::loadTranslation(const QString &language)
     qDebug() << "loadTranslation qmPath:" << qmPath;
     if (translator->load(qmPath)) {  // 加载翻译文件
         qApp->installTranslator(translator);
+        emit COMM.sigLanguageChange(qmName);
     }
 }
 
@@ -85,8 +86,8 @@ Communication::Communication(QObject *parent)
 std::map<QString, QString> languageMap()
 {
     static  std::map<QString, QString> map = {  {"English", "en_us"}
-        // , {"简体中文", "zh_cn"}
-        // , {"繁体中文", "zh_tw"}
+        , {"简体中文", "zh_cn"}
+        , {"繁体中文", "zh_tw"}
     };
     return map;
 }
