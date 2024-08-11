@@ -17,6 +17,7 @@ class Tray : public QObject
 
 public:
     void openWindow();
+    void setAppFont(const QString& tFont);
 
 private:
     void initUI();

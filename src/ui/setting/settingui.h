@@ -21,15 +21,21 @@ public:
 
 private slots:
     void onLanguageChanged(const QString &arg1);
+    void onFontChanged();
+    void onAutostart(bool checked);
 
 private:
     void initUI();
+
+protected:
+    void closeEvent(QCloseEvent *e) override;
 
 private:
     Ui::SettingUI  *ui;
     Ui::SubGeneral *uiSubGeneral;
     Ui::SubUpdate  *uiSubUpdate;
     Ui::SubAbout   *uiSubAbout;
+
 };
 
 #endif // SETTINGUI_H

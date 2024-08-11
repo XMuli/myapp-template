@@ -33,10 +33,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTool
 set(basics_files
     basics/isingleton.h
 
-    # basics/configjson.h
-    # basics/configjson.cpp
     basics/communication.h
     basics/communication.cpp
+    basics/configjson.h
+    basics/configjson.cpp
 )
 
 set(src_files
@@ -99,27 +99,27 @@ endif()
 
 #************************************************* 拷贝 .json 和资源文件 *******************************************************
 # copy "resources" 文件夹下的指定文件夹
-# set(folders_to_copy "licenses" "logo" "cpack")
-# set(source_root "${CMAKE_CURRENT_SOURCE_DIR}/resources")
-# set(traget_root "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources")
+set(folders_to_copy "licenses" "logo" "cpack")
+set(source_root "${CMAKE_CURRENT_SOURCE_DIR}/resources")
+set(traget_root "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources")
 
-# # 遍历复制文件夹集合中的每个文件夹
-# foreach(it ${folders_to_copy})
-#     set(copy_source_dir "${source_root}/${it}")
-#     file(COPY ${copy_source_dir} DESTINATION ${traget_root})
-# endforeach()
+# 遍历复制文件夹集合中的每个文件夹
+foreach(it ${folders_to_copy})
+    set(copy_source_dir "${source_root}/${it}")
+    file(COPY ${copy_source_dir} DESTINATION ${traget_root})
+endforeach()
 
-# if(APPLE)
-#     file(COPY "${CMAKE_SOURCE_DIR}/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${project_name}.app/Contents/MacOS")
-# else()
-#     file(COPY "${CMAKE_SOURCE_DIR}/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")  # windows and linux
-#     file(COPY "${source_root}/debian" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-# endif()
+if(APPLE)
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources/config/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${project_name}.app/Contents/MacOS")
+else()
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources/config/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")  # windows and linux
+    # file(COPY "${source_root}/debian" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+endif()
 
-#if(UNIX)
-#    file(GLOB sh_files "${source_root}/linux/debian/*.sh")
-#    file(COPY ${sh_files} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-#endif()
+if(UNIX)
+   file(GLOB sh_files "${source_root}/linux/debian/*.sh")
+   file(COPY ${sh_files} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif()
 #************************************************* update .ts, and generate .qm *******************************************************
 set(ts_dir "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 if(APPLE)
@@ -163,10 +163,10 @@ file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*.cpp" "
 source_group(TREE ${src_root_path} FILES ${source_lists})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/ui/include")                                    # 修复 Qt Design 使用提升自定义控件后， MinGW 找不到而编译失败; 且 MSVC 和 MinGW 使用提升时候，都不需要加上 相对路径
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/basics")
-# include_directories("${CMAKE_SOURCE_DIR}/tripartite/QHotkey")
-# include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/json")
-# include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/qt_aes")
-# include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/easyloggingpp")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/QHotkey")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/json")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/qt_aes")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/easyloggingpp")
 
 # Define some variables that can be used in *.cpp
 target_compile_definitions(${project_name} PRIVATE XPROJECT_NAME="${project_name}")

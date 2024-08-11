@@ -10,6 +10,7 @@
 #include <QProcess>
 #include <QDebug>
 #include "communication.h"
+#include "configjson.h"
 
 void Tray::openWindow()
 {
@@ -17,8 +18,29 @@ void Tray::openWindow()
     onSetting();
 }
 
+void Tray::setAppFont(const QString &tFont)
+{
+    QStringList list = tFont.isEmpty() ? CJ_GET_QSTR("general.font").split(",") : tFont.split(",");
+    if (list.size() < 2) {
+        list .clear();
+
+#if defined(Q_OS_WIN)
+        list << "Microsoft YaHei" << "9";
+#elif defined(Q_OS_LINUX)
+        list << "WenQuanYi Micro Hei" << "9";
+#elif defined(Q_OS_MAC)
+        list << "PingFang SC" << "11";
+#endif
+
+    }
+    const QFont font(list.at(0), list.at(1).toInt());
+    qApp->setFont(font);
+    m_trayMenu->setFont(font);
+}
+
 void Tray::initUI()
 {
+    setAppFont("");
     QAction* function1 = new QAction(this);
     QAction* function2 = new QAction(this);
     QAction* mainWin = new QAction(this);
@@ -137,4 +159,5 @@ Tray::~Tray()
     if (m_trayIcon) m_trayIcon->deleteLater();
     if (m_setting) m_setting->deleteLater();
     if (m_mainWin) m_mainWin->deleteLater();
+    CJ.onSyncToFile();
 }

@@ -1,0 +1,20 @@
+{
+    "general": {
+        "language": "English",
+        "font": "Microsoft YaHei,9",
+        "autostart": false
+    },
+    "interface": {},
+    "update": {},
+    "about": {},
+    "advanced": {
+        "info": {
+            "version": "1.0.0",
+            "exe_path": "",
+            "output_path": ""
+        },
+        "customize_ui_parameters": {},
+        "non_ui_user_experience": {},
+        "develpe_enginner": {}
+    }
+}

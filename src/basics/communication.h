@@ -18,6 +18,7 @@ public:
     void loadTranslation(const QString& language);
     QString toLocaleName(const QString& language);
     void trialVersion();
+    void setAppFont(const QString& font);
     static Communication &instance(); // signle
 
 signals:

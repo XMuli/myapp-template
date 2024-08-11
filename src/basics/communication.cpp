@@ -11,8 +11,9 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QDate>
-
 #include <QString>
+#include "configjson.h"
+#include "../ui/tray/tray.h"
 
 Communication &Communication::instance()
 {
@@ -22,8 +23,7 @@ Communication &Communication::instance()
 
 void Communication::loadTranslation(const QString &language)
 {
-    QString temp = /*language.isEmpty() ? CJ_GET_QSTR("general.language") : language;*/ language.isEmpty() ? QLocale::system().name() : language;
-    temp = temp.toLower();
+    QString temp = language.isEmpty() ? CJ_GET_QSTR("general.language") : language; /*language.isEmpty() ? QLocale::system().name().toLower() : language;*/
 
     // 创建 QTranslator 对象
     static QTranslator* translator = nullptr;
@@ -52,7 +52,7 @@ QString Communication::toLocaleName(const QString &language)
 void Communication::trialVersion()
 {
     // 设定检查的日期
-    QDate checkDate(2024, 9, 30);
+    QDate checkDate(2025, 12, 30);
     QDate currentDate = QDate::currentDate();
 
     if (currentDate >= checkDate) {
@@ -74,6 +74,11 @@ void Communication::trialVersion()
             std::exit(0);
         }
     }
+}
+
+void Communication::setAppFont(const QString &font)
+{
+    TRAY.setAppFont(font);
 }
 
 Communication::Communication(QObject *parent)
