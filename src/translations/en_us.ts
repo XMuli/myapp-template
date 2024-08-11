@@ -42,12 +42,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../basics/communication.cpp" line="58"/>
+        <location filename="../basics/communication.cpp" line="59"/>
         <source>Your current version is outdated. Please download the latest version from &lt;a href=&apos;http://ecgview.xmuli.tech&apos;&gt;ecgview.xmuli.tech&lt;/a&gt; or contact developer at &lt;a href=&apos;mailto:xmulitech@gmail.com&apos;&gt;xmulitech@gmail.com&lt;/a&gt; for the download link.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basics/communication.cpp" line="65"/>
+        <location filename="../basics/communication.cpp" line="66"/>
         <source>Version Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -75,13 +75,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="37"/>
+        <location filename="../ui/setting/settingui.cpp" line="74"/>
         <source>%1-bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="38"/>
+        <location filename="../ui/setting/settingui.cpp" line="75"/>
         <source>Version %1 (%2) - %3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingui.cpp" line="84"/>
+        <source>Select Font</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -95,11 +100,6 @@
     <message>
         <location filename="../ui/setting/sub_about.ui" line="66"/>
         <source>My App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_about.ui" line="76"/>
-        <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -138,11 +138,6 @@
     <message>
         <location filename="../ui/setting/sub_general.ui" line="49"/>
         <source>Run on system startup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_general.ui" line="56"/>
-        <source>PushButton3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -214,12 +209,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="177"/>
+        <location filename="../ui/setting/sub_update.ui" line="183"/>
         <source>Proxy type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="240"/>
+        <location filename="../ui/setting/sub_update.ui" line="246"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,37 +222,37 @@
 <context>
     <name>Tray</name>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="96"/>
+        <location filename="../ui/tray/tray.cpp" line="137"/>
         <source>this is my app.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="97"/>
+        <location filename="../ui/tray/tray.cpp" line="138"/>
         <source>function1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="98"/>
+        <location filename="../ui/tray/tray.cpp" line="139"/>
         <source>function2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="99"/>
+        <location filename="../ui/tray/tray.cpp" line="140"/>
         <source>Open Main Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="100"/>
+        <location filename="../ui/tray/tray.cpp" line="141"/>
         <source>Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="101"/>
+        <location filename="../ui/tray/tray.cpp" line="142"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="102"/>
+        <location filename="../ui/tray/tray.cpp" line="143"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

@@ -160,6 +160,12 @@
       </item>
       <item row="1" column="3">
        <widget class="QSpinBox" name="sbPort">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="frame">
          <bool>true</bool>
         </property>

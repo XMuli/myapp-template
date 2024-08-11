@@ -49,10 +49,7 @@ void SettingUI::initUI()
     uiSubGeneral->cbAutostart->hide();
 #endif
 
-    uiSubAbout->labProject->setText(QString("%1").arg(XPROJECT_NAME));
-    uiSubAbout->labBit->setText(tr("%1-bit").arg(XARCH_BIT));
-    uiSubAbout->labVersion->setText(tr("Version %1 (%2) - %3 %4").arg(XPROJECT_VERSION).arg(XBUILD_TIME).arg(XCOMPILER).arg(XCOMPILER_ID));
-
+    onLanguageChanged("");
     connect(uiSubGeneral->cbbLanguage, &QComboBox::currentTextChanged, this, &SettingUI::onLanguageChanged);
     connect(uiSubGeneral->btnFont, &QPushButton::released, this, &SettingUI::onFontChanged);
     connect(uiSubGeneral->cbAutostart, &QCheckBox::clicked, this, &SettingUI::onAutostart);
@@ -68,8 +65,15 @@ void SettingUI::onLanguageChanged(const QString &arg1)
 {
     COMM.loadTranslation(arg1);
     ui->retranslateUi(this);
+    uiSubGeneral->retranslateUi(this);
+    uiSubUpdate->retranslateUi(this);
+    uiSubAbout->retranslateUi(this);
 
     uiSubGeneral->btnFont->setText(CJ_GET_QSTR("general.font")); // fix: 切换语言后会被刷新掉
+    uiSubAbout->labProject->setText(QString("%1").arg(XPROJECT_NAME));
+    uiSubAbout->labBit->setText(tr("%1-bit").arg(XARCH_BIT));
+    uiSubAbout->labVersion->setText(tr("Version %1 (%2) - %3 %4").arg(XPROJECT_VERSION).arg(XBUILD_TIME).arg(XCOMPILER).arg(XCOMPILER_ID));
+
     CJ_SET("general.language", arg1.toStdString());
 }
 

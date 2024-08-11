@@ -73,7 +73,7 @@
       <item row="1" column="0" colspan="3">
        <widget class="QLabel" name="labVersion">
         <property name="text">
-         <string>Version</string>
+         <string/>
         </property>
        </widget>
       </item>
