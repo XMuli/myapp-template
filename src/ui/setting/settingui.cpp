@@ -7,6 +7,8 @@
 #include <QFontDialog>
 #include <QSettings>
 #include <QVBoxLayout>
+#include <QPointer>
+#include "licenseui.h"
 #include "communication.h"
 #include "configjson.h"
 
@@ -53,6 +55,8 @@ void SettingUI::initUI()
     connect(uiSubGeneral->cbbLanguage, &QComboBox::currentTextChanged, this, &SettingUI::onLanguageChanged);
     connect(uiSubGeneral->btnFont, &QPushButton::released, this, &SettingUI::onFontChanged);
     connect(uiSubGeneral->cbAutostart, &QCheckBox::clicked, this, &SettingUI::onAutostart);
+
+    connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
 }
 
 void SettingUI::closeEvent(QCloseEvent *e)
@@ -64,10 +68,10 @@ void SettingUI::closeEvent(QCloseEvent *e)
 void SettingUI::onLanguageChanged(const QString &arg1)
 {
     COMM.loadTranslation(arg1);
-    ui->retranslateUi(this);
     uiSubGeneral->retranslateUi(this);
     uiSubUpdate->retranslateUi(this);
     uiSubAbout->retranslateUi(this);
+    ui->retranslateUi(this);  // fix: 在 uiSubXxx 后面，i18n 被刷新为 Form
 
     uiSubGeneral->btnFont->setText(CJ_GET_QSTR("general.font")); // fix: 切换语言后会被刷新掉
     uiSubAbout->labProject->setText(QString("%1").arg(XPROJECT_NAME));
@@ -121,5 +125,14 @@ void SettingUI::onAutostart(bool checked)
 #endif
 
     CJ_SET("general.autostart", checked);
+}
+
+void SettingUI::onLicensesRelease()
+{
+    static QPointer<LicenseUI> licenseUI = nullptr;
+    if (!licenseUI) {
+        licenseUI = new LicenseUI(nullptr);
+        if (!licenseUI->isVisible()) licenseUI->show();
+    }
 }
 

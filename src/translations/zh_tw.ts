@@ -2,6 +2,26 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_TW">
 <context>
+    <name>LicenseUI</name>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="14"/>
+        <source>Open source licenses</source>
+        <translation>開源協</translation>
+    </message>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="42"/>
+        <source>Copyright (C) 2024~2024 XMuli. All rights reserved.
+The birth of this project is inseparable from these open source software</source>
+        <translation>版權所有 2023~2024 XMuli. 保留所有權利。
+本項目的誕生離不開如下開源項目</translation>
+    </message>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="53"/>
+        <source>About Qt</source>
+        <translation>關於 Qt</translation>
+    </message>
+</context>
+<context>
     <name>MainWin</name>
     <message>
         <location filename="../ui/main/mainwin.ui" line="14"/>
@@ -75,17 +95,17 @@
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="74"/>
+        <location filename="../ui/setting/settingui.cpp" line="78"/>
         <source>%1-bit</source>
         <translation>%1-位</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="75"/>
+        <location filename="../ui/setting/settingui.cpp" line="79"/>
         <source>Version %1 (%2) - %3 %4</source>
         <translation>版本 %1 (%2) - %3 %4</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="84"/>
+        <location filename="../ui/setting/settingui.cpp" line="88"/>
         <source>Select Font</source>
         <translation>選擇字體</translation>
     </message>

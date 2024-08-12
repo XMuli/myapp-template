@@ -2,6 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>LicenseUI</name>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="14"/>
+        <source>Open source licenses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="42"/>
+        <source>Copyright (C) 2024~2024 XMuli. All rights reserved.
+The birth of this project is inseparable from these open source software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../xwidgets/sources/licenseui.ui" line="53"/>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWin</name>
     <message>
         <location filename="../ui/main/mainwin.ui" line="14"/>
@@ -75,17 +94,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="74"/>
+        <location filename="../ui/setting/settingui.cpp" line="78"/>
         <source>%1-bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="75"/>
+        <location filename="../ui/setting/settingui.cpp" line="79"/>
         <source>Version %1 (%2) - %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="84"/>
+        <location filename="../ui/setting/settingui.cpp" line="88"/>
         <source>Select Font</source>
         <translation type="unfinished"></translation>
     </message>

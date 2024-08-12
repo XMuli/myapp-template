@@ -20,9 +20,12 @@ public:
     ~SettingUI();
 
 private slots:
+    // sub_general.ui
     void onLanguageChanged(const QString &arg1);
     void onFontChanged();
     void onAutostart(bool checked);
+    // sub_about.ui
+    void onLicensesRelease();
 
 private:
     void initUI();

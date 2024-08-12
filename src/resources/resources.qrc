@@ -6,5 +6,10 @@
         <file>logo/logo.svg</file>
         <file>logo/logo.png</file>
         <file>config/xconfig.json</file>
+        <file>licenses/tripartite/abumq_easylogging++_MIT_LICENSE.txt</file>
+        <file>licenses/tripartite/bricke_Qt-AES_Unlicense_LICENSE.txt</file>
+        <file>licenses/tripartite/nlohmann_json_MIT_LICENSE.txt</file>
+        <file>licenses/tripartite/README.txt</file>
+        <file>licenses/tripartite/Skycoder42_QHotkey_LICENSE.txt</file>
     </qresource>
 </RCC>
