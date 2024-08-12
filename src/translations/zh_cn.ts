@@ -180,8 +180,8 @@ The birth of this project is inseparable from these open source software</source
     </message>
     <message>
         <location filename="../ui/setting/sub_update.ui" line="70"/>
-        <source>Include beta version</source>
-        <translation>包括 beta 版本</translation>
+        <source>Join the Insider Program</source>
+        <translation>获取预览体验计划</translation>
     </message>
     <message>
         <location filename="../ui/setting/sub_update.ui" line="77"/>

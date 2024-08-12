@@ -24,6 +24,16 @@ private slots:
     void onLanguageChanged(const QString &arg1);
     void onFontChanged();
     void onAutostart(bool checked);
+    // sub_update.ui
+    void onAutoCheckUpdateClicked(bool checked);
+    void onDayValueChanged(int arg1);
+    void onJoinInsiderProgramToggled(bool checked);
+
+    void onProxyTypeCurrentIndexChanged(int index);
+    void onIPEditingFinished();
+    void onPortEditingFinished();
+    void onTestReleased();
+    void onCheckUpdateReleased();
     // sub_about.ui
     void onLicensesRelease();
 

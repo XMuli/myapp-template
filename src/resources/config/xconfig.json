@@ -5,14 +5,27 @@
         "autostart": false
     },
     "interface": {},
-    "update": {},
-    "about": {},
+    "update": {
+        "version": "1.0.0",
+        "last_check_time": "",
+        "enable_auto_check": true,
+        "day": 7,
+        "join_inside": false,
+        "porxy": {
+            "type": 0,
+            "server": "",
+            "port": 0,
+            "url_down": "https://github.com/XMuli/myapp-template/releases",
+            "url_test1": "https://www.baidu.com",
+            "url_test2": "https://www.google.com"
+        }
+    },
+    "about": {
+        "exe_path": "",
+        "output_path": ""
+    },
     "advanced": {
-        "info": {
-            "version": "1.0.0",
-            "exe_path": "",
-            "output_path": ""
-        },
+        "info": {},
         "customize_ui_parameters": {},
         "non_ui_user_experience": {},
         "develpe_enginner": {}

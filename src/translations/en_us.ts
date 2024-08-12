@@ -179,7 +179,7 @@ The birth of this project is inseparable from these open source software</source
     </message>
     <message>
         <location filename="../ui/setting/sub_update.ui" line="70"/>
-        <source>Include beta version</source>
+        <source>Join the Insider Program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -8,6 +8,7 @@
 #include <QSettings>
 #include <QVBoxLayout>
 #include <QPointer>
+#include <QDateTime>
 #include "licenseui.h"
 #include "communication.h"
 #include "configjson.h"
@@ -51,11 +52,22 @@ void SettingUI::initUI()
     uiSubGeneral->cbAutostart->hide();
 #endif
 
+    // sub_general.ui
     onLanguageChanged("");
     connect(uiSubGeneral->cbbLanguage, &QComboBox::currentTextChanged, this, &SettingUI::onLanguageChanged);
     connect(uiSubGeneral->btnFont, &QPushButton::released, this, &SettingUI::onFontChanged);
     connect(uiSubGeneral->cbAutostart, &QCheckBox::clicked, this, &SettingUI::onAutostart);
+    // sub_update.ui
+    connect(uiSubUpdate->cbAutoCheckUpdate, &QCheckBox::clicked, this, &SettingUI::onAutoCheckUpdateClicked);
+    connect(uiSubUpdate->sbDay, QOverload<int>::of(&QSpinBox::valueChanged), this, &SettingUI::onDayValueChanged);
+    connect(uiSubUpdate->cbJoinInsiderProgram, &QCheckBox::clicked, this, &SettingUI::onJoinInsiderProgramToggled);
 
+    connect(uiSubUpdate->cbbProxyType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SettingUI::onProxyTypeCurrentIndexChanged);
+    connect(uiSubUpdate->leIP, &QLineEdit::editingFinished, this, &SettingUI::onIPEditingFinished);
+    connect(uiSubUpdate->sbPort, QOverload<int>::of(&QSpinBox::valueChanged), this, &SettingUI::onPortEditingFinished);
+    connect(uiSubUpdate->btnTest, &QPushButton::released, this, &SettingUI::onTestReleased);
+    connect(uiSubUpdate->btnCheckUpdate, &QPushButton::released, this, &SettingUI::onCheckUpdateReleased);
+    // sub_about.ui
     connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
 }
 
@@ -127,6 +139,52 @@ void SettingUI::onAutostart(bool checked)
     CJ_SET("general.autostart", checked);
 }
 
+void SettingUI::onAutoCheckUpdateClicked(bool checked)
+{
+    CJ_SET("update.enable_auto_check", checked);
+}
+
+void SettingUI::onDayValueChanged(int arg1)
+{
+    CJ_SET("update.day", arg1);
+}
+
+void SettingUI::onJoinInsiderProgramToggled(bool checked)
+{
+    CJ_SET("update.join_inside", checked);
+}
+
+// 0-NoProxy  1-SystemProxy,  2-HTTPS  3-SOCKET5
+void SettingUI::onProxyTypeCurrentIndexChanged(int index)
+{
+    CJ_SET("update.porxy.type", index);
+}
+
+
+void SettingUI::onIPEditingFinished()
+{
+    CJ_SET("update.porxy.server", uiSubUpdate->leIP->text().toStdString());
+}
+
+
+void SettingUI::onPortEditingFinished()
+{
+    CJ_SET("update.porxy.port", uiSubUpdate->sbPort->value());
+}
+
+
+void SettingUI::onTestReleased()
+{
+    // 访问验证测试网络
+}
+
+
+void SettingUI::onCheckUpdateReleased()
+{
+    // 尝试验证和下载网络
+    CJ_SET("update.last_check_time", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss:zzz").toStdString());
+}
+
 void SettingUI::onLicensesRelease()
 {
     static QPointer<LicenseUI> licenseUI = nullptr;
@@ -135,4 +193,6 @@ void SettingUI::onLicensesRelease()
         if (!licenseUI->isVisible()) licenseUI->show();
     }
 }
+
+
 
