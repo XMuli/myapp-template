@@ -1,4 +1,4 @@
-#ifndef CONFIGJSON_H
+﻿#ifndef CONFIGJSON_H
 #define CONFIGJSON_H
 
 #include <QObject>

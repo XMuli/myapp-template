@@ -1,4 +1,4 @@
-#ifndef SETTINGUI_H
+﻿#ifndef SETTINGUI_H
 #define SETTINGUI_H
 
 #include <QWidget>

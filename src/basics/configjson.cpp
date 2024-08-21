@@ -1,4 +1,4 @@
-#include "configjson.h"
+﻿#include "configjson.h"
 #include <Qt>
 #include <QFile>
 #include <QPen>

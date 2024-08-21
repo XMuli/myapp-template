@@ -1,4 +1,4 @@
-#ifndef MAINWIN_H
+﻿#ifndef MAINWIN_H
 #define MAINWIN_H
 
 #include <QMainWindow>

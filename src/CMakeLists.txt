@@ -37,6 +37,8 @@ set(basics_files
     basics/communication.cpp
     basics/configjson.h
     basics/configjson.cpp
+    basics/xapphelper.h
+    basics/xapphelper.cpp
 )
 
 set(xwidgets_files
@@ -181,6 +183,7 @@ target_compile_definitions(${project_name} PRIVATE XPROJECT_VERSION="${project_v
 target_compile_definitions(${project_name} PRIVATE XARCH_BIT="${arch_bit}")
 target_compile_definitions(${project_name} PRIVATE XCOMPILER="${CMAKE_HOST_SYSTEM_PROCESSOR}")  # i386/i686/x86_64/unknown  Win: AMD64
 target_compile_definitions(${project_name} PRIVATE XCOMPILER_ID="${CMAKE_CXX_COMPILER_ID}")     # Clang/GCC/MSVC or GNU
+target_compile_definitions(${project_name} PRIVATE UNICODE _UNICODE)
 
 message("------------1. Qt install path, base build and generate macro------------")
 message("Qt5_DIR:" ${Qt5_DIR})
