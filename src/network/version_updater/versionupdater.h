@@ -22,6 +22,7 @@ public:
 
     enum RESP_TYPE {
         RT_empty,                      // 忘记头文件加此，则解析默认为这个
+        RT_test_url,                   // 检查网络
         RT_check_update,               // 检查版本更新
         RT_download_latest,            // 仅下载支持 release
         RT_download_insider            // 下载包括内测版本
@@ -34,17 +35,18 @@ public:
         HttpProxy,
         Socks5Proxy
     };
+    Q_ENUM(ProxyType)
 
 public:
     void checkForUpdate();
-    void downLatestVersion();
-    void testConnectivity(const QStringList &urls);
-
-private:
+    void downLatestVersion(QString url);
+    void testUrlConnectivity(const QStringList &urls);
     void setProxy(ProxyType proxyType, const QString &host = QString(), int port = 0);
 
+private:
     void dealCheckForUpdate(QNetworkReply *reply);
     void dealDownLatestVersion(QNetworkReply *reply);
+    void dealTestUrlConnectivity(QNetworkReply *reply);
 
     void handleRedirect(QNetworkReply *reply);
 
@@ -53,14 +55,11 @@ signals:
 
 public slots:
     void onFinished(QNetworkReply *reply);
-    void onConnectivityTestFinished(QNetworkReply *reply);
 
 
 private:
     QString m_localVersion;
     QNetworkAccessManager *m_manager;
-    QString m_latestVersion;
-    QString m_downloadUrl;
     QTemporaryFile m_tempFile;
 };
 

@@ -16,8 +16,9 @@
             "server": "",
             "port": 0,
             "url_down": "https://github.com/XMuli/myapp-template/releases",
-            "url_test1": "https://www.baidu.com",
-            "url_test2": "https://www.google.com"
+            "url_test1": "https://www.github.com",
+            "url_test2": "https://www.baidu.com",
+            "url_test3": "https://www.google.com"
         }
     },
     "about": {

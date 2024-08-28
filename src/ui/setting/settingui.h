@@ -31,9 +31,7 @@ private slots:
     void onDayValueChanged(int arg1);
     void onJoinInsiderProgramToggled(bool checked);
 
-    void onProxyTypeCurrentIndexChanged(int index);
-    void onIPEditingFinished();
-    void onPortEditingFinished();
+    void onSetProxy();
     void onTestReleased();
     void onCheckUpdateReleased();
     // sub_about.ui
@@ -41,6 +39,7 @@ private slots:
 
 private:
     void initUI();
+    void setServerIPStatus();
 
 protected:
     void closeEvent(QCloseEvent *e) override;

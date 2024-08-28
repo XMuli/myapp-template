@@ -10,6 +10,7 @@
 #include <QPointer>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QMetaEnum>
 #include "licenseui.h"
 #include "communication.h"
 #include "configjson.h"
@@ -53,6 +54,21 @@ void SettingUI::initUI()
     uiSubGeneral->cbAutostart->setChecked(CJ_GET("general.autostart").get<bool>());
     uiSubGeneral->btnFont->resize(uiSubGeneral->cbbLanguage->size());
 
+
+    const auto& proxyType = CJ_GET("update.porxy.type").get<int>();
+    const auto& server = CJ_GET_QSTR("update.porxy.server");
+    const auto& port = CJ_GET("update.porxy.port").get<int>();
+    const auto& url_down = CJ_GET_QSTR("update.porxy.url_down");
+
+    uiSubUpdate->cbbProxyType->addItem(tr("No Proxy"), QVariant::fromValue(VersionUpdater::NoProxy));
+    uiSubUpdate->cbbProxyType->addItem(tr("System Proxy"), QVariant::fromValue(VersionUpdater::SystemProxy));
+    uiSubUpdate->cbbProxyType->addItem("HTTP", QVariant::fromValue(VersionUpdater::HttpProxy));
+    uiSubUpdate->cbbProxyType->addItem("SOCKS5", QVariant::fromValue(VersionUpdater::Socks5Proxy));
+    uiSubUpdate->cbbProxyType->setCurrentIndex(proxyType);
+    uiSubUpdate->leIP->setText(server);
+    uiSubUpdate->sbPort->setValue(port);
+    setServerIPStatus();
+
 #if defined(Q_OS_MACOS)
     uiSubGeneral->cbAutostart->hide();
 #endif
@@ -67,9 +83,10 @@ void SettingUI::initUI()
     connect(uiSubUpdate->sbDay, QOverload<int>::of(&QSpinBox::valueChanged), this, &SettingUI::onDayValueChanged);
     connect(uiSubUpdate->cbJoinInsiderProgram, &QCheckBox::clicked, this, &SettingUI::onJoinInsiderProgramToggled);
 
-    connect(uiSubUpdate->cbbProxyType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SettingUI::onProxyTypeCurrentIndexChanged);
-    connect(uiSubUpdate->leIP, &QLineEdit::editingFinished, this, &SettingUI::onIPEditingFinished);
-    connect(uiSubUpdate->sbPort, QOverload<int>::of(&QSpinBox::valueChanged), this, &SettingUI::onPortEditingFinished);
+    connect(uiSubUpdate->cbbProxyType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SettingUI::setServerIPStatus);
+    connect(uiSubUpdate->cbbProxyType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SettingUI::onSetProxy);
+    connect(uiSubUpdate->leIP, &QLineEdit::editingFinished, this, &SettingUI::onSetProxy);
+    connect(uiSubUpdate->sbPort, QOverload<int>::of(&QSpinBox::valueChanged), this, &SettingUI::onSetProxy);
     connect(uiSubUpdate->btnTest, &QPushButton::released, this, &SettingUI::onTestReleased);
     connect(uiSubUpdate->btnCheckUpdate, &QPushButton::released, this, &SettingUI::onCheckUpdateReleased);
     // sub_about.ui
@@ -161,30 +178,35 @@ void SettingUI::onJoinInsiderProgramToggled(bool checked)
 }
 
 // 0-NoProxy  1-SystemProxy,  2-HTTPS  3-SOCKET5
-void SettingUI::onProxyTypeCurrentIndexChanged(int index)
+void SettingUI::onSetProxy()
 {
-    CJ_SET("update.porxy.type", index);
+    VersionUpdater::ProxyType proxyType = uiSubUpdate->cbbProxyType->currentData().value<VersionUpdater::ProxyType>();
+    QString ip = uiSubUpdate->leIP->text();
+    int port = uiSubUpdate->sbPort->value();
+
+    m_verUpdate->setProxy(proxyType, ip, port);
+    setServerIPStatus();
+    CJ_SET("update.porxy.type", int(proxyType));
+    CJ_SET("update.porxy.server", ip.toStdString());
+    CJ_SET("update.porxy.port", port);
 }
 
-
-void SettingUI::onIPEditingFinished()
+void SettingUI::setServerIPStatus()
 {
-    CJ_SET("update.porxy.server", uiSubUpdate->leIP->text().toStdString());
+    VersionUpdater::ProxyType proxyType = uiSubUpdate->cbbProxyType->currentData().value<VersionUpdater::ProxyType>();
+    bool disable = (proxyType == VersionUpdater::NoProxy || proxyType == VersionUpdater::SystemProxy) ? true : false;
+    uiSubUpdate->leIP->setDisabled(disable);
+    uiSubUpdate->sbPort->setDisabled(disable);
 }
-
-
-void SettingUI::onPortEditingFinished()
-{
-    CJ_SET("update.porxy.port", uiSubUpdate->sbPort->value());
-}
-
 
 void SettingUI::onTestReleased()
 {
+    const auto& url1 = CJ_GET_QSTR("update.porxy.url_test1");
+    const auto& url2 = CJ_GET_QSTR("update.porxy.url_test2");
+    const auto& url3 = CJ_GET_QSTR("update.porxy.url_test3");
     // 访问验证测试网络
-
-    QStringList urlsToTest = {"https://www.baidu.com", "https://www.google.com", "https://www.github.com"};
-    m_verUpdate->testConnectivity(urlsToTest);
+    QStringList urlsToTest = {url1, url2, url3};
+    m_verUpdate->testUrlConnectivity(urlsToTest);
 }
 
 
@@ -192,9 +214,7 @@ void SettingUI::onCheckUpdateReleased()
 {
     // 尝试验证和下载网络
     CJ_SET("update.last_check_time", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss:zzz").toStdString());
-    // m_verUpdate->checkForUpdate();
-    m_verUpdate->downLatestVersion();
-    // VersionUpdater
+    m_verUpdate->checkForUpdate();
 }
 
 void SettingUI::onLicensesRelease()

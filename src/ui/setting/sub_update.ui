@@ -114,28 +114,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="cbbProxyType">
-        <item>
-         <property name="text">
-          <string>No Proxy</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>System Proxy</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>HTTP</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>SOCKS5</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="cbbProxyType"/>
       </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_5">
