@@ -52,6 +52,7 @@ private:
 
 signals:
     void updateAvailable(const QString &latestVersion, const QString &downloadUrl);
+    void sigDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 public slots:
     void onFinished(QNetworkReply *reply);

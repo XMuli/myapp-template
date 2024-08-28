@@ -33,6 +33,7 @@ private slots:
 
     void onSetProxy();
     void onTestReleased();
+    void onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void onCheckUpdateReleased();
     // sub_about.ui
     void onLicensesRelease();

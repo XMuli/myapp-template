@@ -41,7 +41,6 @@ void VersionUpdater::downLatestVersion(QString url)
         return;
     }
 
-
     QUrl qurl(url);
     QNetworkRequest request(qurl);
     request.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_download_latest));
@@ -60,20 +59,9 @@ void VersionUpdater::downLatestVersion(QString url)
                 QNetworkReply* newReply = m_manager->get(newRequest);
 
                 m_tempFile.open();
-                connect(newReply, &QNetworkReply::downloadProgress, this, [](qint64 bytesReceived, qint64 bytesTotal) {
-                    if (bytesTotal > 0) {
-                        int progress = static_cast<int>((bytesReceived * 100) / bytesTotal);
-                        qDebug() << "Download progress:" << bytesReceived << "/" << bytesTotal << progress << "%";
-                    } else {
-                        qDebug() << "Download progress:" << bytesReceived << "/Unknown" << "0%";
-                    }
-                });
-
-
-                // 逐块读取数据并写入临时文件
+                connect(newReply, &QNetworkReply::downloadProgress, this, &VersionUpdater::sigDownloadProgress);
                 connect(newReply, &QNetworkReply::readyRead, this, [this, newReply]() {
-                    if (m_tempFile.isOpen()) m_tempFile.write(newReply->readAll());
-                });
+                    if (m_tempFile.isOpen()) m_tempFile.write(newReply->readAll());});   // 逐块读取数据并写入临时文件
             }
         });
 

@@ -54,7 +54,6 @@ void SettingUI::initUI()
     uiSubGeneral->cbAutostart->setChecked(CJ_GET("general.autostart").get<bool>());
     uiSubGeneral->btnFont->resize(uiSubGeneral->cbbLanguage->size());
 
-
     const auto& proxyType = CJ_GET("update.porxy.type").get<int>();
     const auto& server = CJ_GET_QSTR("update.porxy.server");
     const auto& port = CJ_GET("update.porxy.port").get<int>();
@@ -68,6 +67,22 @@ void SettingUI::initUI()
     uiSubUpdate->leIP->setText(server);
     uiSubUpdate->sbPort->setValue(port);
     setServerIPStatus();
+    // 设置进度条的样式表
+    uiSubUpdate->progressBar->setStyleSheet(
+        "QProgressBar#progressBar {"
+        "    border: none;"
+        "    background: rgb(54, 54, 54);"
+        "    border-radius: 6px;"
+        "    text-align: center;"
+        "    color: rgb(229, 229, 229);"
+        "}"
+        "QProgressBar::chunk {"
+        "    background-color: rgb(58, 154, 255);"
+        "    border-radius: 4px;"
+        "}"
+        );
+    uiSubUpdate->downProgessDlg->hide();
+
 
 #if defined(Q_OS_MACOS)
     uiSubGeneral->cbAutostart->hide();
@@ -92,10 +107,15 @@ void SettingUI::initUI()
     // sub_about.ui
     connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
 
+    connect(m_verUpdate, &VersionUpdater::sigDownloadProgress, this, &SettingUI::onDownloadProgress);
+
 }
 
 void SettingUI::closeEvent(QCloseEvent *e)
 {
+    uiSubUpdate->labDown->setText("");
+    uiSubUpdate->progressBar->setValue(0);
+    uiSubUpdate->downProgessDlg->setVisible(false);
     CJ.onSyncToFile();
     QWidget::closeEvent(e);
 }
@@ -209,6 +229,24 @@ void SettingUI::onTestReleased()
     m_verUpdate->testUrlConnectivity(urlsToTest);
 }
 
+void SettingUI::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    if (!uiSubUpdate->downProgessDlg->isVisible())
+        uiSubUpdate->downProgessDlg->setVisible(true);
+
+    int progress = 0;
+    if (bytesTotal > 0) {
+        progress = static_cast<int>((bytesReceived * 100) / bytesTotal);
+        qDebug() << "Download progress:" << bytesReceived << "/" << bytesTotal << progress << "%";
+    } else {
+        qDebug() << "Download progress:" << bytesReceived << "/Unknown" << "0%";
+    }
+
+    const QString name = m_verUpdate->property("down_file_name").toString();
+    QString text = QString("%1: %2/%3").arg(name).arg(bytesReceived).arg(bytesTotal);
+    uiSubUpdate->labDown->setText(text);
+    uiSubUpdate->progressBar->setValue(progress);
+}
 
 void SettingUI::onCheckUpdateReleased()
 {
