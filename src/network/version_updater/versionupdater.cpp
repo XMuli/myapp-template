@@ -7,7 +7,10 @@
 #include <QDir>
 
 VersionUpdater::VersionUpdater(const QString &localVersion, QObject *parent)
-    : QObject(parent), m_localVersion(localVersion), m_manager(new QNetworkAccessManager(this))
+    : QObject(parent)
+    , m_localVersion(localVersion)
+    , m_manager(new QNetworkAccessManager(this))
+    , m_redirect(true)
 {
     connect(m_manager, &QNetworkAccessManager::finished, this, &VersionUpdater::onFinished);
 }
@@ -31,32 +34,50 @@ void VersionUpdater::testUrlConnectivity(const QStringList &urls)
 
 void VersionUpdater::downLatestVersion(QString url)
 {
-    url = "https://picgo-release.molunerfinn.com/2.4.0-beta.8/PicGo-Setup-2.4.0-beta.8-ia32.exe";
+    // url = "https://picgo-release.molunerfinn.com/2.4.0-beta.8/PicGo-Setup-2.4.0-beta.8-ia32.exe";
     // m_downloadUrl = "https://picgo-release.molunerfinn.com/2.4.0-beta.8/PicGo-Setup-2.4.0-beta.8.exe";
     if (url.isEmpty()) {
         qDebug() << "Download URL is empty.";
         return;
     }
 
-    QNetworkRequest request((QUrl(url)));
+
+    QUrl qurl(url);
+    QNetworkRequest request(qurl);
     request.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_download_latest));
-    QNetworkReply * reply = m_manager->get(request);
-    m_tempFile.open();
+    setProperty("down_file_name", QFileInfo(qurl.path()).fileName());
 
-    connect(reply, &QNetworkReply::downloadProgress, this, [](qint64 bytesReceived, qint64 bytesTotal) {
-        if (bytesTotal > 0) {
-            int progress = static_cast<int>((bytesReceived * 100) / bytesTotal);
-            qDebug() << "Download progress:" << bytesReceived << "/" << bytesTotal << progress << "%";
-        } else {
-            qDebug() << "Download progress:" << bytesReceived << "/Unknown" << "0%";
-        }
-    });
+    if (m_redirect) { // 是 GitHub 会重定向的链接
+
+        QNetworkReply* reply = m_manager->get(request);
+        connect(reply, &QNetworkReply::finished, this, [this, reply](){
+            QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+
+            if (!redirectUrl.isEmpty()) {
+                m_redirect = false;
+                QNetworkRequest newRequest(redirectUrl);
+                newRequest.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_download_latest));
+                QNetworkReply* newReply = m_manager->get(newRequest);
+
+                m_tempFile.open();
+                connect(newReply, &QNetworkReply::downloadProgress, this, [](qint64 bytesReceived, qint64 bytesTotal) {
+                    if (bytesTotal > 0) {
+                        int progress = static_cast<int>((bytesReceived * 100) / bytesTotal);
+                        qDebug() << "Download progress:" << bytesReceived << "/" << bytesTotal << progress << "%";
+                    } else {
+                        qDebug() << "Download progress:" << bytesReceived << "/Unknown" << "0%";
+                    }
+                });
 
 
-    // 逐块读取数据并写入临时文件
-    connect(reply, &QNetworkReply::readyRead, this, [this, reply]() {
-        if (m_tempFile.isOpen()) m_tempFile.write(reply->readAll());
-    });
+                // 逐块读取数据并写入临时文件
+                connect(newReply, &QNetworkReply::readyRead, this, [this, newReply]() {
+                    if (m_tempFile.isOpen()) m_tempFile.write(newReply->readAll());
+                });
+            }
+        });
+
+    }
 }
 
 void VersionUpdater::setProxy(ProxyType proxyType, const QString &host, int port)
@@ -110,33 +131,33 @@ void VersionUpdater::dealCheckForUpdate(QNetworkReply *reply)
 
 void VersionUpdater::dealDownLatestVersion(QNetworkReply *reply)
 {
+    m_redirect = true;
     if (reply->error() != QNetworkReply::NoError) {
         qDebug() << "Download error:" << reply->errorString();
         m_tempFile.remove(); // 删除错误的文件
         m_tempFile.close(); // 关闭文件
         return;
     } else {
-        m_tempFile.flush(); // 确保所有数据都写入文件            m_tempFile.close(); // 关闭文件
+        m_tempFile.flush(); // 确保所有数据都写入文件
+        m_tempFile.close(); // 关闭文件
     }
 
-    QString tempFilePath = m_tempFile.fileName(); // 获取临时文件路径
+    QString tempFilePath = m_tempFile.fileName();  // 获取临时文件路径
+    QFileInfo fileInfo(tempFilePath);
+    QString directoryPath = fileInfo.path();  // 获取文件所在目录路径
+    const QString name = property("down_file_name").toString();
+    // QString finalFilePath = QDir::homePath() + QDir::separator() + name;
+    QString finalFilePath = directoryPath + QDir::separator() + name;
     qDebug() << "Download completed. Temporary file saved to:" << tempFilePath;
+    qDebug() << "Final file path:" << finalFilePath;
 
-    // // 从下载链接中提取文件名
-    // QUrl url(m_downloadUrl);
-    // QString fileName = QFileInfo(url.path()).fileName();
-    // // QString finalFilePath = QDir::homePath() + QDir::separator() + fileName;
-    // QString finalFilePath = QString("D:") + QDir::separator() + fileName;
-
-    // qDebug() << "Temporary file path:" << tempFilePath;
-    // qDebug() << "Final file path:" << finalFilePath;
-
-    // // 重命名临时文件
-    // if (QFile::rename(tempFilePath, finalFilePath)) {
-    //     qDebug() << "File rename saved to:" << finalFilePath;
-    // } else {
-    //     qDebug() << "Failed to rename file.";
-    // }
+    QFile::remove(finalFilePath);  // 删除目标文件（如果存在）
+    if (QFile::copy(tempFilePath, finalFilePath)) {
+        qDebug() << "File copied successfully to:" << finalFilePath;
+        m_tempFile.remove();  // 删除原来的临时文件
+    } else {
+        qDebug() << "Failed to copy file to:" << finalFilePath;
+    }
 }
 
 void VersionUpdater::dealTestUrlConnectivity(QNetworkReply *reply)
@@ -172,16 +193,12 @@ void VersionUpdater::onFinished(QNetworkReply *reply)
         dealCheckForUpdate(reply);
     } else if (static_cast<RESP_TYPE>(type) == RESP_TYPE::RT_download_latest || static_cast<RESP_TYPE>(type) == RESP_TYPE::RT_download_insider) {
 
-        // handleRedirect(reply);
-         // if (!reply->isFinished()) {
-         //     reply->deleteLater();
-         //     return;
-         // }
-        dealDownLatestVersion(reply);
+        if (!m_redirect)
+            dealDownLatestVersion(reply);
     }
 
-
-    qDebug() << "reply:" << reply;
+    static int i = 1;
+    qDebug() << "deleteLater reply:" << reply << i++;
     if (reply) reply->deleteLater();
 }
 
