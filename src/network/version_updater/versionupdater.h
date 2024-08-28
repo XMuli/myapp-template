@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 #include <QVersionNumber>
 #include <QNetworkProxy>
+#include <QTemporaryFile>
 #include "json.hpp"
 using json = nlohmann::json;
 
@@ -36,12 +37,19 @@ signals:
 public slots:
     void onFinished(QNetworkReply *reply);
     void onConnectivityTestFinished(QNetworkReply *reply);
+    void downloadLatestVersion();
 
 private:
     QString m_localVersion;
     QNetworkAccessManager *m_manager;
     QString m_latestVersion;
     QString m_downloadUrl;
+    QTemporaryFile m_tempFile;
+
+    void handleRedirect(QNetworkReply *reply);
+    void startDownload();
+    void onDownloadReadyRead();
+    void onDownloadFinished();
 };
 
 #endif // VERSIONUPDATER_H
