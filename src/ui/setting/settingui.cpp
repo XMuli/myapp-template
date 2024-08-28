@@ -75,29 +75,6 @@ void SettingUI::initUI()
     // sub_about.ui
     connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
 
-
-
-
-    connect(m_verUpdate, &VersionUpdater::updateAvailable, [](const QString &latestVersion, const QString &downloadUrl) {
-        QMessageBox::information(nullptr, "Update Available",
-                                 QString("新版本 (%1) 可用。下载地址: %2").arg(latestVersion, downloadUrl));
-    });
-
-    connect(m_verUpdate, &VersionUpdater::noUpdateAvailable, []() {
-        QMessageBox::information(nullptr, "No Update", "当前已是最新版本。");
-    });
-
-    connect(m_verUpdate, &VersionUpdater::errorOccurred, [](const QString &errorMessage) {
-        QMessageBox::critical(nullptr, "Error", errorMessage);
-    });
-
-    connect(m_verUpdate, &VersionUpdater::connectivityTestResult, [](const QString &url, bool success) {
-        if (success) {
-            qDebug() << "连接测试成功:" << url;
-        } else {
-            qDebug() << "连接测试失败:" << url;
-        }
-    });
 }
 
 void SettingUI::closeEvent(QCloseEvent *e)
@@ -215,7 +192,8 @@ void SettingUI::onCheckUpdateReleased()
 {
     // 尝试验证和下载网络
     CJ_SET("update.last_check_time", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss:zzz").toStdString());
-    m_verUpdate->checkForUpdate();
+    // m_verUpdate->checkForUpdate();
+    m_verUpdate->downLatestVersion();
     // VersionUpdater
 }
 
