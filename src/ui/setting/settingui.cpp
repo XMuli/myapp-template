@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QPointer>
 #include <QDateTime>
+#include <QMessageBox>
 #include "licenseui.h"
 #include "communication.h"
 #include "configjson.h"
@@ -19,6 +20,7 @@ SettingUI::SettingUI(QWidget *parent)
     , uiSubGeneral(new Ui::SubGeneral)
     , uiSubUpdate(new Ui::SubUpdate)
     , uiSubAbout(new Ui::SubAbout)
+    , m_verUpdate(new VersionUpdater(QString(XPROJECT_VERSION), this))
 {
     ui->setupUi(this);
 
@@ -31,10 +33,13 @@ SettingUI::~SettingUI()
     delete uiSubGeneral;
     delete uiSubUpdate;
     delete uiSubAbout;
+
+    if (m_verUpdate) m_verUpdate->deleteLater();
 }
 
 void SettingUI::initUI()
 {
+
     // 单独的 .ui 添加到 TabWidget 子对象中
     uiSubGeneral->setupUi(ui->generalDlg);
     uiSubUpdate->setupUi(ui->updateDlg);
@@ -69,6 +74,30 @@ void SettingUI::initUI()
     connect(uiSubUpdate->btnCheckUpdate, &QPushButton::released, this, &SettingUI::onCheckUpdateReleased);
     // sub_about.ui
     connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
+
+
+
+
+    connect(m_verUpdate, &VersionUpdater::updateAvailable, [](const QString &latestVersion, const QString &downloadUrl) {
+        QMessageBox::information(nullptr, "Update Available",
+                                 QString("新版本 (%1) 可用。下载地址: %2").arg(latestVersion, downloadUrl));
+    });
+
+    connect(m_verUpdate, &VersionUpdater::noUpdateAvailable, []() {
+        QMessageBox::information(nullptr, "No Update", "当前已是最新版本。");
+    });
+
+    connect(m_verUpdate, &VersionUpdater::errorOccurred, [](const QString &errorMessage) {
+        QMessageBox::critical(nullptr, "Error", errorMessage);
+    });
+
+    connect(m_verUpdate, &VersionUpdater::connectivityTestResult, [](const QString &url, bool success) {
+        if (success) {
+            qDebug() << "连接测试成功:" << url;
+        } else {
+            qDebug() << "连接测试失败:" << url;
+        }
+    });
 }
 
 void SettingUI::closeEvent(QCloseEvent *e)
@@ -176,6 +205,9 @@ void SettingUI::onPortEditingFinished()
 void SettingUI::onTestReleased()
 {
     // 访问验证测试网络
+
+    QStringList urlsToTest = {"https://www.baidu.com", "https://www.google.com", "https://www.github.com"};
+    m_verUpdate->testConnectivity(urlsToTest);
 }
 
 
@@ -183,6 +215,8 @@ void SettingUI::onCheckUpdateReleased()
 {
     // 尝试验证和下载网络
     CJ_SET("update.last_check_time", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss:zzz").toStdString());
+    m_verUpdate->checkForUpdate();
+    // VersionUpdater
 }
 
 void SettingUI::onLicensesRelease()

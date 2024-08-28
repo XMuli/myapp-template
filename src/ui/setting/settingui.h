@@ -2,7 +2,9 @@
 #define SETTINGUI_H
 
 #include <QWidget>
-#include <qboxlayout.h>
+#include <QBoxLayout>
+#include <QPointer>
+#include "../../network/version_updater/versionupdater.h"
 
 namespace Ui {
 class SettingUI;
@@ -44,11 +46,12 @@ protected:
     void closeEvent(QCloseEvent *e) override;
 
 private:
-    Ui::SettingUI  *ui;
-    Ui::SubGeneral *uiSubGeneral;
-    Ui::SubUpdate  *uiSubUpdate;
-    Ui::SubAbout   *uiSubAbout;
+    Ui::SettingUI*   ui;
+    Ui::SubGeneral*  uiSubGeneral;
+    Ui::SubUpdate*   uiSubUpdate;
+    Ui::SubAbout*    uiSubAbout;
 
+    QPointer<VersionUpdater>  m_verUpdate;
 };
 
 #endif // SETTINGUI_H

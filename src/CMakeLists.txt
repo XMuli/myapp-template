@@ -20,7 +20,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(qt_moduls Widgets)    # Network Multimedia WebSockets Xml Svg Network Charts 是区分大小写
+set(qt_moduls Widgets Network)    #  Multimedia WebSockets Xml Svg Network Charts 是区分大小写
 set(qt_version_moduls)
 foreach(it ${qt_moduls})
     list(APPEND qt_version_moduls Qt${QT_VERSION_MAJOR}::${it})
@@ -161,7 +161,8 @@ message("-->qm_files: ${qm_files}")
 # link_directories(${trage_runtime_output_dir})                                                    # ②添加链接库路径
 #***************************************************************************************************************************
 
-add_executable(${project_name} ${src_files} ${xwidgets_files} ${basics_files})
+add_executable(${project_name} ${src_files} ${xwidgets_files} ${basics_files}
+    network/version_updater/versionupdater.h network/version_updater/versionupdater.cpp)
 target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
 
 # 按实际目录结构显示项目结构
