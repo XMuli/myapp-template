@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QMetaEnum>
 #include <QDir>
+#include "../basics/configjson.h"
 
 VersionUpdater::VersionUpdater(const QString &localVersion, QObject *parent)
     : QObject(parent)
@@ -21,6 +22,11 @@ void VersionUpdater::checkForUpdate()
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_check_update));
     m_manager->get(request);
+
+
+    QDateTime currentTime = QDateTime::currentDateTime();
+    QString currentTimeStr = currentTime.toString(Qt::ISODate); // 格式化为 ISO 日期字符串
+    CJ_SET("update.last_check_time", currentTimeStr.toStdString()); // 保存当前时间为上次检查时间
 }
 
 void VersionUpdater::testUrlConnectivity(const QStringList &urls)
@@ -163,6 +169,28 @@ void VersionUpdater::handleRedirect(QNetworkReply *reply)
         newRequest.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_download_latest));
         m_manager->get(newRequest);
     }
+}
+
+bool VersionUpdater::userAllowCheckUpdate()
+{
+    bool bAutoCheck = CJ_GET("update.enable_auto_check").get<bool>();
+    if (!bAutoCheck) return false;
+
+    QString lastCheckTimeStr = CJ_GET_QSTR("update.last_check_time");
+    int lastDay = CJ_GET("update.day").get<int>();
+    if (lastCheckTimeStr.isEmpty()) return true;
+
+    // 将 lastCheckTime 转换为 QDateTime 对象
+    QDateTime lastCheckTime = QDateTime::fromString(lastCheckTimeStr, Qt::ISODate);
+    if (!lastCheckTime.isValid()) return false;  // 确保上次检查时间是有效的
+    QDateTime currentTime = QDateTime::currentDateTime();
+
+    // 计算当前时间与上次检查时间的差值，判断是否大于等于设置的天数
+    if (lastCheckTime.daysTo(currentTime) >= lastDay)
+        return true;
+
+    return false;
+    // bool bJoinInside = CJ_GET("update.join_inside").get<bool>();
 }
 
 void VersionUpdater::onFinished(QNetworkReply *reply)

@@ -38,6 +38,7 @@ public:
     Q_ENUM(ProxyType)
 
 public:
+    bool userAllowCheckUpdate();
     void checkForUpdate();
     void downLatestVersion(QString url);
     void testUrlConnectivity(const QStringList &urls);

@@ -85,6 +85,13 @@ void Tray::initUI()
 #ifdef Q_OS_WIN  // Ensure proper removal of tray icon when program quits on Windows.
     connect(qApp, &QCoreApplication::aboutToQuit, m_trayIcon, &QSystemTrayIcon::hide);
 #endif
+
+    // 1 分钟后开始自动检测新版本
+    QTimer::singleShot(1 * 1 * 1000, this, []() {
+        if (COMM.verUpdate()->userAllowCheckUpdate()) {
+            COMM.verUpdate()->checkForUpdate();
+        }
+    });
 }
 
 void Tray::onFunction1()

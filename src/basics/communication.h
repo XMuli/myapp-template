@@ -8,6 +8,8 @@
 // #include <map>
 #include <QObject>
 #include <QString>
+#include <QPointer>
+#include "../network/version_updater/versionupdater.h"
 
 #define COMM Communication::instance()
 
@@ -21,6 +23,8 @@ public:
     void setAppFont(const QString& font);
     static Communication &instance(); // signle
 
+    QPointer<VersionUpdater> verUpdate() const;
+
 signals:
     void sigLanguageChange(const QString qmFile);
     void sigShowSystemMessagebox(const QString &title, const QString &msg, const int& msecs); // 系统消息通知
@@ -32,6 +36,8 @@ private:
     Communication& operator=(const Communication&) = delete;
     Communication(Communication&&) = delete;
     Communication& operator=(Communication&&) = delete;
+
+    QPointer<VersionUpdater>  m_verUpdate;
 };
 
 std::map<QString, QString> languageMap();

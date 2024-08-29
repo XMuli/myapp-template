@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QBoxLayout>
-#include <QPointer>
-#include "../../network/version_updater/versionupdater.h"
+
+
 
 namespace Ui {
 class SettingUI;
@@ -40,7 +40,8 @@ private slots:
 
 private:
     void initUI();
-    void setServerIPStatus();
+    void setCheckUpdateStatus();  // 自动禁用检查相关按钮
+    void setServerIPStatus();     // 自动禁用代理相关控件
 
 protected:
     void closeEvent(QCloseEvent *e) override;
@@ -51,7 +52,7 @@ private:
     Ui::SubUpdate*   uiSubUpdate;
     Ui::SubAbout*    uiSubAbout;
 
-    QPointer<VersionUpdater>  m_verUpdate;
+
 };
 
 #endif // SETTINGUI_H

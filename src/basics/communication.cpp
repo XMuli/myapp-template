@@ -81,10 +81,17 @@ void Communication::setAppFont(const QString &font)
     TRAY.setAppFont(font);
 }
 
+
 Communication::Communication(QObject *parent)
     : QObject(parent)
+    , m_verUpdate(new VersionUpdater(QString(XPROJECT_VERSION), this))
 {
 
+}
+
+QPointer<VersionUpdater> Communication::verUpdate() const
+{
+    return m_verUpdate;
 }
 
 

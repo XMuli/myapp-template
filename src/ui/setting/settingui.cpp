@@ -21,7 +21,7 @@ SettingUI::SettingUI(QWidget *parent)
     , uiSubGeneral(new Ui::SubGeneral)
     , uiSubUpdate(new Ui::SubUpdate)
     , uiSubAbout(new Ui::SubAbout)
-    , m_verUpdate(new VersionUpdater(QString(XPROJECT_VERSION), this))
+
 {
     ui->setupUi(this);
 
@@ -34,8 +34,6 @@ SettingUI::~SettingUI()
     delete uiSubGeneral;
     delete uiSubUpdate;
     delete uiSubAbout;
-
-    if (m_verUpdate) m_verUpdate->deleteLater();
 }
 
 void SettingUI::initUI()
@@ -53,6 +51,15 @@ void SettingUI::initUI()
     uiSubGeneral->btnFont->setText(CJ_GET_QSTR("general.font"));
     uiSubGeneral->cbAutostart->setChecked(CJ_GET("general.autostart").get<bool>());
     uiSubGeneral->btnFont->resize(uiSubGeneral->cbbLanguage->size());
+
+
+    const auto& enable_auto_check = CJ_GET("update.enable_auto_check").get<bool>();
+    const auto& join_inside = CJ_GET("update.join_inside").get<bool>();
+    const auto& day = CJ_GET("update.day").get<int>();
+    uiSubUpdate->cbAutoCheckUpdate->setChecked(enable_auto_check);
+    uiSubUpdate->cbJoinInsiderProgram->setChecked(join_inside);
+    uiSubUpdate->sbDay->setValue(day);
+    setCheckUpdateStatus();
 
     const auto& proxyType = CJ_GET("update.porxy.type").get<int>();
     const auto& server = CJ_GET_QSTR("update.porxy.server");
@@ -107,7 +114,15 @@ void SettingUI::initUI()
     // sub_about.ui
     connect(uiSubAbout->btnLicenses, &QPushButton::released, this, &SettingUI::onLicensesRelease);
 
-    connect(m_verUpdate, &VersionUpdater::sigDownloadProgress, this, &SettingUI::onDownloadProgress);
+    connect(COMM.verUpdate(), &VersionUpdater::sigDownloadProgress, this, &SettingUI::onDownloadProgress);
+
+}
+
+void SettingUI::setCheckUpdateStatus()
+{
+    bool checked = uiSubUpdate->cbAutoCheckUpdate->isChecked();
+    uiSubUpdate->cbJoinInsiderProgram->setDisabled(!checked);
+    uiSubUpdate->sbDay->setDisabled(!checked);
 
 }
 
@@ -184,6 +199,7 @@ void SettingUI::onAutostart(bool checked)
 
 void SettingUI::onAutoCheckUpdateClicked(bool checked)
 {
+    setCheckUpdateStatus();
     CJ_SET("update.enable_auto_check", checked);
 }
 
@@ -204,7 +220,7 @@ void SettingUI::onSetProxy()
     QString ip = uiSubUpdate->leIP->text();
     int port = uiSubUpdate->sbPort->value();
 
-    m_verUpdate->setProxy(proxyType, ip, port);
+    COMM.verUpdate()->setProxy(proxyType, ip, port);
     setServerIPStatus();
     CJ_SET("update.porxy.type", int(proxyType));
     CJ_SET("update.porxy.server", ip.toStdString());
@@ -226,7 +242,7 @@ void SettingUI::onTestReleased()
     const auto& url3 = CJ_GET_QSTR("update.porxy.url_test3");
     // 访问验证测试网络
     QStringList urlsToTest = {url1, url2, url3};
-    m_verUpdate->testUrlConnectivity(urlsToTest);
+    COMM.verUpdate()->testUrlConnectivity(urlsToTest);
 }
 
 void SettingUI::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -242,7 +258,7 @@ void SettingUI::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
         qDebug() << "Download progress:" << bytesReceived << "/Unknown" << "0%";
     }
 
-    const QString name = m_verUpdate->property("down_file_name").toString();
+    const QString name = COMM.verUpdate()->property("down_file_name").toString();
     QString text = QString("%1: %2/%3").arg(name).arg(bytesReceived).arg(bytesTotal);
     uiSubUpdate->labDown->setText(text);
     uiSubUpdate->progressBar->setValue(progress);
@@ -252,7 +268,7 @@ void SettingUI::onCheckUpdateReleased()
 {
     // 尝试验证和下载网络
     CJ_SET("update.last_check_time", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss:zzz").toStdString());
-    m_verUpdate->checkForUpdate();
+    COMM.verUpdate()->checkForUpdate();
 }
 
 void SettingUI::onLicensesRelease()
