@@ -22,6 +22,7 @@
         }
     },
     "about": {
+        "first_run": true,
         "exe_path": "",
         "output_path": ""
     },

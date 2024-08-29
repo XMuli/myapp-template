@@ -86,6 +86,11 @@ void Tray::initUI()
     connect(qApp, &QCoreApplication::aboutToQuit, m_trayIcon, &QSystemTrayIcon::hide);
 #endif
 
+    if (CJ_GET("about.first_run").get<bool>()) {
+        emit COMM.sigShowSystemMessagebox(tr("%1 is runing").arg(XPROJECT_NAME), tr("You can control it via the tray icon."), 10 * 1000);
+        CJ_SET("about.first_run", false);
+    }
+
     // 1 分钟后开始自动检测新版本
     QTimer::singleShot(1 * 1 * 1000, this, []() {
         if (COMM.verUpdate()->userAllowCheckUpdate()) {
