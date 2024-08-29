@@ -6,6 +6,7 @@
 #include <QMetaEnum>
 #include <QDir>
 #include "../basics/configjson.h"
+#include "communication.h"
 
 VersionUpdater::VersionUpdater(const QString &localVersion, QObject *parent)
     : QObject(parent)
@@ -23,10 +24,10 @@ void VersionUpdater::checkForUpdate()
     request.setAttribute(QNetworkRequest::User, int(RESP_TYPE::RT_check_update));
     m_manager->get(request);
 
-
     QDateTime currentTime = QDateTime::currentDateTime();
     QString currentTimeStr = currentTime.toString(Qt::ISODate); // 格式化为 ISO 日期字符串
     CJ_SET("update.last_check_time", currentTimeStr.toStdString()); // 保存当前时间为上次检查时间
+    CJ_SET("update.version", QString(XPROJECT_VERSION).toStdString()); // 保存当前软件版本
 }
 
 void VersionUpdater::testUrlConnectivity(const QStringList &urls)
@@ -119,7 +120,7 @@ void VersionUpdater::dealCheckForUpdate(QNetworkReply *reply)
         if (ret == QMessageBox::Ok)
             downLatestVersion(url);
     } else {
-        QMessageBox::information(nullptr, tr("No Update"), tr("You are already on the latest version."));
+        emit COMM.sigShowSystemMessagebox(tr("No Update"), tr("You are already on the latest version."), 10 * 1000);
     }
 }
 

@@ -122,6 +122,7 @@ void Tray::onRestart()
 void Tray::onShowSystemMessagebox(const QString &title, const QString &msg, const int& msecs)
 {
     m_trayIcon->showMessage(title, msg, QIcon(":/resources/logo/logo.svg"), msecs);
+    m_trayIcon->showMessage(title, msg, QIcon(":/logo/logo.svg"), msecs);
 }
 
 void Tray::onTrayIcon(QSystemTrayIcon::ActivationReason reason)
