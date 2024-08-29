@@ -1,4 +1,4 @@
-#ifndef VERSIONUPDATER_H
+﻿#ifndef VERSIONUPDATER_H
 #define VERSIONUPDATER_H
 
 #include <QObject>
