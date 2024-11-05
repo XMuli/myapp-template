@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingNavUI</class>
+ <widget class="QWidget" name="SettingNavUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1105</width>
+    <height>699</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="styleSheet">
+      <string notr="true">/*---------------------------------- QTreeView, QTreeWidget -------------------------------*/
+QTreeView {
+    border: none;
+    show-decoration-selected: 1;
+    font-size: 15px;
+    color: #415058;
+}
+QTreeView::item {
+    outline: none;
+    min-height: 48px;
+    padding-left: 6px;
+}</string>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Nav</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QWidget" name="generalDlg"/>
+     <widget class="QWidget" name="updateDlg"/>
+     <widget class="QWidget" name="aboutDlg"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

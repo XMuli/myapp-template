@@ -6,6 +6,7 @@
 #include <QPointer>
 #include <QSystemTrayIcon>
 #include "../setting/settingui.h"
+#include "../setting/settingnavui.h"
 #include "../main/mainwin.h"
 
 
@@ -49,7 +50,7 @@ protected:
 private:
     QPointer<QMenu>                  m_trayMenu;
     QPointer<QSystemTrayIcon>        m_trayIcon;
-    QPointer<SettingUI>              m_setting;
+    QPointer<SettingNavUI>              m_setting;
     QPointer<MainWin>                m_mainWin;
 };
 

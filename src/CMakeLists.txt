@@ -162,7 +162,8 @@ message("-->qm_files: ${qm_files}")
 #***************************************************************************************************************************
 
 add_executable(${project_name} ${src_files} ${xwidgets_files} ${basics_files}
-    network/version_updater/versionupdater.h network/version_updater/versionupdater.cpp)
+    network/version_updater/versionupdater.h network/version_updater/versionupdater.cpp
+    ui/setting/settingnavui.h ui/setting/settingnavui.cpp ui/setting/settingnavui.ui)
 target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
 
 # 按实际目录结构显示项目结构

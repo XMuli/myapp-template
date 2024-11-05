@@ -92,11 +92,11 @@ void Tray::initUI()
     }
 
     // 1 分钟后开始自动检测新版本
-    QTimer::singleShot(1 * 1 * 1000, this, []() {
-        if (COMM.verUpdate()->userAllowCheckUpdate()) {
-            COMM.verUpdate()->checkForUpdate();
-        }
-    });
+    // QTimer::singleShot(1 * 1 * 1000, this, []() {
+    //     if (COMM.verUpdate()->userAllowCheckUpdate()) {
+    //         COMM.verUpdate()->checkForUpdate();
+    //     }
+    // });
 }
 
 void Tray::onFunction1()
@@ -112,7 +112,7 @@ void Tray::onMainWin()
 
 void Tray::onSetting()
 {
-    if (!m_setting) m_setting = new SettingUI();
+    if (!m_setting) m_setting = new SettingNavUI();
     // m_setting->adjustSize();
     m_setting->show();
 }
