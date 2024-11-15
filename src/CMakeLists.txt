@@ -1,4 +1,3 @@
-# SPDX-License-Identifier:
 # SPDX-FileCopyrightText: 2023-2024 XMuli
 # SPDX-GitHub: https://github.com/XMuli
 # SPDX-Author: XMuli <xmulitech@gmail.com>
@@ -23,11 +22,27 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_moduls} LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTools) # LinguistTools No link
 
 set(src_files
-        main.cpp
-        widget.cpp
-        widget.h
-        widget.ui
+    main.cpp
+    ui/main/mainwin.h
+    ui/main/mainwin.cpp
+    ui/main/mainwin.ui
+
+    ui/setting/settingui.h
+    ui/setting/settingui.cpp
+    ui/setting/settingui.ui
 )
+
+set(xwidgets_files
+)
+
+# if(APPLE)
+# elseif(WIN32)
+#     list(APPEND xwidgets_files
+#     )
+# else()
+#     list(APPEND xwidgets_files
+#     )
+# endif()
 
 #********************************************** 判断且定义 x64/x86 变量 (get kit architecture bit) ****************************
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
@@ -105,9 +120,9 @@ file(GLOB_RECURSE qm_files "${qm_dir}/*.qm")
 #***************************************************************************************************************************
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(${project_name} MANUAL_FINALIZATION ${src_files} )
+    qt_add_executable(${project_name} MANUAL_FINALIZATION ${src_files} ${xwidgets_files})
 else()
-    add_executable(${project_name} ${src_files} )
+    add_executable(${project_name} ${src_files} ${xwidgets_files})
 endif()
 
 set(qt_version_moduls)
@@ -116,6 +131,15 @@ foreach(it ${qt_moduls})
 endforeach()
 
 target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
+
+# 按实际目录结构显示项目结构
+set(src_root_path ${CMAKE_CURRENT_SOURCE_DIR})                                                 # default root path curr path （CMakeList.txt）
+# file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*")
+file(GLOB_RECURSE source_lists LIST_DIRECTORIES false "${src_root_path}/*.cpp" "${src_root_path}/*.h" "${src_root_path}/*.ui" "${src_root_path}/*.rc")
+source_group(TREE ${src_root_path} FILES ${source_lists})
+
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/ui/include")                                  # 修复 Qt Design 使用提升自定义控件后， MinGW 找不到而编译失败; 且 MSVC 和 MinGW 使用提升时候，都不需要加上 相对路径
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/xwidgets/include")
 
 # Define some variables that can be used in *.cpp
 target_compile_definitions(${project_name} PRIVATE XPROJECT_NAME="${project_name}")

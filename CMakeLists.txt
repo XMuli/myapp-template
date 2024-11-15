@@ -1,5 +1,4 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2024-2024 XMuli
+# SPDX-FileCopyrightText: 2023-2024 XMuli
 # SPDX-GitHub: https://github.com/XMuli
 # SPDX-Author: XMuli <xmulitech@gmail.com>
 
@@ -7,6 +6,10 @@ cmake_minimum_required(VERSION 3.5)
 project(myapp)
 
 #add_subdirectory(tripartite/QHotkey)  # 三方库置顶，避免被下面统一的路径修改所干扰
+
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Default build type: Release." FORCE)
+endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

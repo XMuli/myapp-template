@@ -1,20 +1,27 @@
-#include "widget.h"
-#include "./ui_widget.h"
+﻿#include "mainwin.h"
+#include "ui_mainwin.h"
+#include <QString>
 
-Widget::Widget(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::Widget)
+MainWin::MainWin(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWin)
 {
     ui->setupUi(this);
+
     initUI();
 }
 
-Widget::~Widget()
+MainWin::~MainWin()
 {
     delete ui;
 }
 
-void Widget::initUI()
+void MainWin::on_pushButton_released()
+{
+
+}
+
+void MainWin::initUI()
 {
     QString text = QString("project:          %1\n"
                            "version:          %2\n"
@@ -28,8 +35,10 @@ void Widget::initUI()
                        .arg(XARCH_BIT)
                        .arg(XCOMPILER)
                        .arg(XCOMPILER_ID)
-                       .arg(QT_VERSION_MAJOR)
+                       .arg(QT_VERSION_STR)
                        .arg(XQT_INSTALL_PATH);
 
     ui->plainTextEdit->appendPlainText(text);
+    setWindowTitle(tr("My app template by Qt %1").arg(QT_VERSION_STR));
 }
+
