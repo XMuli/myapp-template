@@ -18,6 +18,9 @@ public:
     ~Widget();
 
 private:
+    void initUI();
+
+private:
     Ui::Widget *ui;
 };
 #endif // WIDGET_H
