@@ -1,4 +1,8 @@
-﻿#include <QApplication>
+﻿// SPDX-FileCopyrightText: 2023-2024 XMuli
+// SPDX-GitHub: https://github.com/XMuli
+// SPDX-Author: XMuli <xmulitech@gmail.com>
+#include <QApplication>
+#include <QSystemSemaphore>
 #include "ui/main/mainwin.h"
 #include "ui/setting/settingui.h"
 #include "ui/tray/tray.h"
@@ -6,7 +10,6 @@
 #include "configjson.h"
 #include "basics/xapphelper.h"
 
-#include <QSystemSemaphore>
 int main(int argc, char *argv[])
 {
     qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -28,6 +31,7 @@ int main(int argc, char *argv[])
 
     COMM.loadTranslation("");
     TRAY;
+    TRAY.onMainWin();
     TRAY.openWindow();
 
     systemSemaphore.release();

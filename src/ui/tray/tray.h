@@ -50,7 +50,7 @@ protected:
 private:
     QPointer<QMenu>                  m_trayMenu;
     QPointer<QSystemTrayIcon>        m_trayIcon;
-    QPointer<SettingNavUI>              m_setting;
+    QPointer<SettingUI>              m_setting;
     QPointer<MainWin>                m_mainWin;
 };
 

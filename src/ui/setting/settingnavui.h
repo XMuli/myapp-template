@@ -1,4 +1,4 @@
-#ifndef SETTINGNAVUI_H
+﻿#ifndef SETTINGNAVUI_H
 #define SETTINGNAVUI_H
 
 #include <QTreeWidgetItem>

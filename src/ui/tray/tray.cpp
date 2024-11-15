@@ -9,6 +9,7 @@
 #include <QFont>
 #include <QProcess>
 #include <QDebug>
+#include <QScreen>
 #include "communication.h"
 #include "configjson.h"
 
@@ -108,13 +109,35 @@ void Tray::onMainWin()
 {
     if (!m_mainWin) m_mainWin = new MainWin();
     m_mainWin->show();
+
+    // 获取鼠标所在屏幕的几何信息
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if (screen)
+    {
+        QRect screenGeometry = screen->geometry();
+        QSize windowSize = m_mainWin->size();
+        int x = screenGeometry.width() / 3 - windowSize.width() / 2;
+        int y = screenGeometry.height() / 2 - windowSize.height() / 2;
+        m_mainWin->move(x, y);
+    }
 }
 
 void Tray::onSetting()
 {
-    if (!m_setting) m_setting = new SettingNavUI();
+    if (!m_setting) m_setting = new SettingUI();
     // m_setting->adjustSize();
     m_setting->show();
+
+    // 获取鼠标所在屏幕的几何信息
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if (screen)
+    {
+        QRect screenGeometry = screen->geometry();
+        QSize windowSize = m_setting->size();
+        int x = screenGeometry.width() * 2 / 3 - windowSize.width() / 2;
+        int y = screenGeometry.height() / 2 - windowSize.height() / 2;
+        m_setting->move(x, y);
+    }
 }
 
 void Tray::onRestart()

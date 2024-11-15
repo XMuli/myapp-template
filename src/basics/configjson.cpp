@@ -77,6 +77,7 @@ void ConfigJson::readFromFile()
 
     QByteArray data = file.readAll();
     if (data.isEmpty()) return;
+
     m_j = ordered_json::parse(data.toStdString()); // Convert JSON data to ordered_json
     file.close();
 

@@ -28,33 +28,43 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="34"/>
+        <location filename="../ui/main/mainwin.ui" line="21"/>
+        <source>My Application Template By Qt 5.15 or 6.8, some information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/main/mainwin.ui" line="63"/>
         <source>Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="41"/>
+        <location filename="../ui/main/mainwin.ui" line="70"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="71"/>
+        <location filename="../ui/main/mainwin.ui" line="90"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="77"/>
+        <location filename="../ui/main/mainwin.ui" line="96"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="87"/>
+        <location filename="../ui/main/mainwin.ui" line="106"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="92"/>
+        <location filename="../ui/main/mainwin.ui" line="111"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/main/mainwin.cpp" line="42"/>
+        <source>My app template by Qt %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -68,6 +78,74 @@ The birth of this project is inseparable from these open source software</source
     <message>
         <location filename="../basics/communication.cpp" line="66"/>
         <source>Version Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basics/xapphelper.cpp" line="108"/>
+        <source>CRASH</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingNavUI</name>
+    <message>
+        <location filename="../ui/setting/settingnavui.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.ui" line="41"/>
+        <source>Nav</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="41"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="42"/>
+        <source>Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="43"/>
+        <source>OCR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="44"/>
+        <source>Extract text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="45"/>
+        <source>Image translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="46"/>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="47"/>
+        <source>Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="48"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="49"/>
+        <source>Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingnavui.cpp" line="50"/>
+        <source>About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -94,17 +172,27 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="78"/>
+        <location filename="../ui/setting/settingui.cpp" line="69"/>
+        <source>No Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingui.cpp" line="70"/>
+        <source>System Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/setting/settingui.cpp" line="148"/>
         <source>%1-bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="79"/>
+        <location filename="../ui/setting/settingui.cpp" line="149"/>
         <source>Version %1 (%2) - %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="88"/>
+        <location filename="../ui/setting/settingui.cpp" line="158"/>
         <source>Select Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,62 +266,42 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="70"/>
+        <location filename="../ui/setting/sub_update.ui" line="76"/>
         <source>Join the Insider Program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="77"/>
+        <location filename="../ui/setting/sub_update.ui" line="83"/>
         <source>day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="100"/>
+        <location filename="../ui/setting/sub_update.ui" line="106"/>
         <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="106"/>
+        <location filename="../ui/setting/sub_update.ui" line="112"/>
         <source>Server:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="114"/>
-        <source>No Proxy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_update.ui" line="119"/>
-        <source>System Proxy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_update.ui" line="124"/>
-        <source>HTTP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_update.ui" line="129"/>
-        <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/sub_update.ui" line="137"/>
+        <location filename="../ui/setting/sub_update.ui" line="122"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="157"/>
+        <location filename="../ui/setting/sub_update.ui" line="142"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="183"/>
+        <location filename="../ui/setting/sub_update.ui" line="174"/>
         <source>Proxy type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/sub_update.ui" line="246"/>
+        <location filename="../ui/setting/sub_update.ui" line="272"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,38 +309,72 @@ The birth of this project is inseparable from these open source software</source
 <context>
     <name>Tray</name>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="137"/>
+        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <source>%1 is runing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <source>You can control it via the tray icon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="150"/>
         <source>this is my app.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="138"/>
+        <location filename="../ui/tray/tray.cpp" line="151"/>
         <source>function1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="139"/>
+        <location filename="../ui/tray/tray.cpp" line="152"/>
         <source>function2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="140"/>
+        <location filename="../ui/tray/tray.cpp" line="153"/>
         <source>Open Main Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="141"/>
+        <location filename="../ui/tray/tray.cpp" line="154"/>
         <source>Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="142"/>
+        <location filename="../ui/tray/tray.cpp" line="155"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="143"/>
+        <location filename="../ui/tray/tray.cpp" line="156"/>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VersionUpdater</name>
+    <message>
+        <location filename="../network/version_updater/versionupdater.cpp" line="119"/>
+        <source>Update Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/version_updater/versionupdater.cpp" line="119"/>
+        <source>A new version %1 is available. Do you want to download it?
+download link: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/version_updater/versionupdater.cpp" line="123"/>
+        <source>No Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/version_updater/versionupdater.cpp" line="123"/>
+        <source>You are already on the latest version.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

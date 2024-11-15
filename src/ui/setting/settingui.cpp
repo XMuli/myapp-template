@@ -38,7 +38,6 @@ SettingUI::~SettingUI()
 
 void SettingUI::initUI()
 {
-
     // 单独的 .ui 添加到 TabWidget 子对象中
     uiSubGeneral->setupUi(ui->generalDlg);
     uiSubUpdate->setupUi(ui->updateDlg);
