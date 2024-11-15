@@ -6,13 +6,52 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>402</height>
+    <width>725</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Setting</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabGeneral">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QWidget" name="generalDlg" native="true"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabUpdate">
+      <attribute name="title">
+       <string>Update</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QWidget" name="updateDlg" native="true"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabAbout">
+      <attribute name="title">
+       <string>About</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QWidget" name="aboutDlg" native="true"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

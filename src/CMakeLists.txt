@@ -17,12 +17,18 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_definitions(-DXBUILD_TIME="2024.11.16")
+
 set(qt_moduls Widgets Network)    #  Multimedia WebSockets Xml Svg Network Charts 是区分大小写
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_moduls} LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTools) # LinguistTools No link
 
 set(src_files
     main.cpp
+
+    ui/tray/tray.h
+    ui/tray/tray.cpp
+
     ui/main/mainwin.h
     ui/main/mainwin.cpp
     ui/main/mainwin.ui
@@ -30,19 +36,34 @@ set(src_files
     ui/setting/settingui.h
     ui/setting/settingui.cpp
     ui/setting/settingui.ui
+    ui/setting/sub_general.ui
+    ui/setting/sub_update.ui
+    ui/setting/sub_about.ui
+
+    resources/resources.qrc
+    resources/logo/resources.rc        # Exe 在大图模式和窗口标题栏都指定 logo 图片
 )
 
 set(xwidgets_files
+    xwidgets/include/licenseui.h
+    xwidgets/sources/licenseui.cpp
+    xwidgets/sources/licenseui.ui
 )
 
-# if(APPLE)
-# elseif(WIN32)
-#     list(APPEND xwidgets_files
-#     )
-# else()
-#     list(APPEND xwidgets_files
-#     )
-# endif()
+set(basics_files
+    basics/isingleton.h
+
+    basics/communication.h
+    basics/communication.cpp
+    basics/configjson.h
+    basics/configjson.cpp
+    basics/xapphelper.h
+    basics/xapphelper.cpp
+
+    network/version_updater/versionupdater.h
+    network/version_updater/versionupdater.cpp
+)
+
 
 #********************************************** 判断且定义 x64/x86 变量 (get kit architecture bit) ****************************
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
@@ -85,7 +106,29 @@ endif()
 
 message("qt_binray_dir: ${qt_binray_dir}")
 message("windeployqt: ${windeployqt}")
-#************************************************* 拷贝 .json 和资源文件 *******************************************************
+#************************************************* copy xconfig.json and resources files *******************************************************
+# copy "resources" 文件夹下的指定文件夹
+set(folders_to_copy "licenses" "logo" "cpack")
+set(source_root "${CMAKE_CURRENT_SOURCE_DIR}/resources")
+set(traget_root "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources")
+
+# 遍历复制文件夹集合中的每个文件夹
+foreach(it ${folders_to_copy})
+    set(copy_source_dir "${source_root}/${it}")
+    file(COPY ${copy_source_dir} DESTINATION ${traget_root})
+endforeach()
+
+if(APPLE)
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources/config/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${project_name}.app/Contents/MacOS")
+else()
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources/config/xconfig.json" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")  # windows and linux
+    # file(COPY "${source_root}/debian" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+endif()
+
+if(UNIX)
+   file(GLOB sh_files "${source_root}/linux/debian/*.sh")
+   file(COPY ${sh_files} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif()
 #************************************************* update .ts, and generate .qm *******************************************************
 set(ts_dir "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 if(APPLE)
@@ -120,9 +163,9 @@ file(GLOB_RECURSE qm_files "${qm_dir}/*.qm")
 #***************************************************************************************************************************
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(${project_name} MANUAL_FINALIZATION ${src_files} ${xwidgets_files})
+    qt_add_executable(${project_name} MANUAL_FINALIZATION ${src_files} ${xwidgets_files} ${basics_files})
 else()
-    add_executable(${project_name} ${src_files} ${xwidgets_files})
+    add_executable(${project_name} ${src_files} ${xwidgets_files} ${basics_files})
 endif()
 
 set(qt_version_moduls)
@@ -140,6 +183,12 @@ source_group(TREE ${src_root_path} FILES ${source_lists})
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/ui/include")                                  # 修复 Qt Design 使用提升自定义控件后， MinGW 找不到而编译失败; 且 MSVC 和 MinGW 使用提升时候，都不需要加上 相对路径
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/xwidgets/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/basics")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/QHotkey")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/json")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/qt_aes")
+include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/easyloggingpp")
+
 
 # Define some variables that can be used in *.cpp
 target_compile_definitions(${project_name} PRIVATE XPROJECT_NAME="${project_name}")

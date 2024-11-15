@@ -1,0 +1,15 @@
+[Desktop Entry]
+Categories=Graphics;
+Comment=A cross-platform software for viewing ECG waveforms and editable annotations (.atr/.qrs)
+Comment[zh_CN]=一个查看 ECG 波形和可编辑注释(.atr/.qrs)的跨平台软件
+Exec=WfdbView
+GenericName=ECG View
+GenericName[zh_CN]=ECG View
+Icon=tech.xmuli.ecgview
+Keywords=Ecg;View;WFDB;EDIT;dat;hea;atr;qrs;XMuli;偕臧
+MimeType=wfdb/dat;wfdb/hea;wfdb/qrs;wfdb/atr;
+Name=ECG View
+Name[zh_CN]=ECG 查看器
+StartupNotify=false
+Type=Application
+Terminal=false

@@ -1,0 +1,35 @@
+{
+    "general": {
+        "language": "English",
+        "font": "Microsoft YaHei,9",
+        "autostart": false
+    },
+    "interface": {},
+    "update": {
+        "version": "1.0.0",
+        "last_check_time": "",
+        "enable_auto_check": true,
+        "day": 1,
+        "join_inside": false,
+        "porxy": {
+            "type": 0,
+            "server": "",
+            "port": 0,
+            "url_down": "https://github.com/XMuli/myapp-template/releases",
+            "url_test1": "https://www.github.com",
+            "url_test2": "https://www.baidu.com",
+            "url_test3": "https://www.google.com"
+        }
+    },
+    "about": {
+        "first_run": true,
+        "exe_path": "",
+        "output_path": ""
+    },
+    "advanced": {
+        "info": {},
+        "customize_ui_parameters": {},
+        "non_ui_user_experience": {},
+        "develpe_enginner": {}
+    }
+}
