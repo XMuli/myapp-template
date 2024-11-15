@@ -1,18 +1,28 @@
+# SPDX-License-Identifier:
+# SPDX-FileCopyrightText: 2023-2024 XMuli
+# SPDX-GitHub: https://github.com/XMuli
+# SPDX-Author: XMuli <xmulitech@gmail.com>
+
 cmake_minimum_required(VERSION 3.16)
 
-project(myapp-qt-template VERSION 0.1 LANGUAGES CXX)
+set(project_name myapp-qt-template)
+set(project_version_major 1)
+set(project_version_minor 0)
+set(project_version_path 0)
+set(project_version ${project_version_major}.${project_version_minor}.${project_version_path})
+project(${project_name} VERSION ${project_version} LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+set(qt_moduls Widgets Network)    #  Multimedia WebSockets Xml Svg Network Charts 是区分大小写
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_moduls} LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTools) # LinguistTools No link
 
-set(PROJECT_SOURCES
+set(src_files
         main.cpp
         widget.cpp
         widget.h
@@ -20,37 +30,25 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(myapp-qt-template
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET myapp-qt-template APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+    qt_add_executable(${project_name} MANUAL_FINALIZATION ${src_files} )
 else()
-    if(ANDROID)
-        add_library(myapp-qt-template SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(myapp-qt-template
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(${project_name} ${src_files} )
 endif()
 
-target_link_libraries(myapp-qt-template PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+set(qt_version_moduls)
+foreach(it ${qt_moduls})
+    list(APPEND qt_version_moduls Qt${QT_VERSION_MAJOR}::${it})
+endforeach()
+
+target_link_libraries(${project_name} PRIVATE ${qt_version_moduls})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.myapp-qt-template)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.${project_name})
 endif()
-set_target_properties(myapp-qt-template PROPERTIES
+set_target_properties(${project_name} PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -59,12 +57,12 @@ set_target_properties(myapp-qt-template PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS myapp-qt-template
+install(TARGETS ${project_name}
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(myapp-qt-template)
+    qt_finalize_executable(${project_name})
 endif()
