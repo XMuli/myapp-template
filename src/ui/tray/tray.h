@@ -1,4 +1,4 @@
-﻿#ifndef TRAY_H
+#ifndef TRAY_H
 #define TRAY_H
 
 #include <QMenu>

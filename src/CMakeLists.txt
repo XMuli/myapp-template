@@ -161,9 +161,6 @@ file(GLOB_RECURSE qm_files "${qm_dir}/*.qm")
 # message("ts_files_name: ${ts_files_name}")
 # message("ts_files: ${ts_files}")
 # message("qm_files: ${qm_files}")
-#******************************************* 调用 WindowsRect DLL 共 ①~④ 步骤 **********************************************
-# include_directories(${CMAKE_CURRENT_SOURCE_DIR}/windows_rect/include/)                           # ①设置头文件目录
-# link_directories(${trage_runtime_output_dir})                                                    # ②添加链接库路径
 #***************************************************************************************************************************
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -192,7 +189,6 @@ include_directories("${CMAKE_SOURCE_DIR}/tripartite/QHotkey")
 include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/json")
 include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/qt_aes")
 include_directories("${CMAKE_SOURCE_DIR}/tripartite/include/easyloggingpp")
-
 
 # Define some variables that can be used in *.cpp
 target_compile_definitions(${project_name} PRIVATE XPROJECT_NAME="${project_name}")
@@ -273,7 +269,7 @@ elseif(WIN32)
 
     add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${project_name}.exe" --no-opengl-sw --no-translations)
 endif()
-#****************************************************** 稚拙 Ununtu 22.04 的 .deb *********************************************************************
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -289,12 +285,102 @@ set_target_properties(${project_name} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+#****************************************************** 稚拙 Ununtu 22.04 的 .deb *********************************************************************
+
 include(GNUInstallDirs)
-install(TARGETS ${project_name}
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+include (FeatureSummary)  # using  set_package_properties
+message("CMAKE_INSTALL_DATADIR: ${CMAKE_INSTALL_DATADIR}")
+#install(TARGETS ${project_name}
+#    BUNDLE DESTINATION .
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
+
+
+if (WIN32)
+elseif (APPLE)
+elseif (UNIX)
+
+    set(CMAKE_INSTALL_PREFIX /usr)
+    # Copying additional files into the .deb package
+#    install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/debian/
+#            DESTINATION "/DEBIAN"
+#            FILES_MATCHING PATTERN "*"
+#            )
+
+    # [/usr/share] - install /usr/share/applications/tech.xmuli.myapp-template.desktop
+    install (FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources/cpack/tech.xmuli.myapp-template.desktop
+             DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
+             )
+    # - install /usr/share/icons/hicolor/scalable/apps/tech.xmuli.myapp-template.svg
+    install (FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources/logo/logo.svg
+             DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps"
+             RENAME tech.xmuli.sunny.svg
+             )
+
+     # - install /usr/share/metainfo/tech.xmuli.myapp-template.metainfo.xml
+#     install (FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources/cpack/appstream/tech.xmuli.myapp-template.metainfo.xml
+#              DESTINATION "${CMAKE_INSTALL_DATADIR}/metainfo"
+#              )
+
+    # [/usr/local] - xconfig.json log.conf, 再通过 postinst 脚本来修拷贝变更其位置
+    install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xconfig.json DESTINATION "/usr/local/${project_name}/config/")
+
+    # - install /usr/local/Sunny/translations/Sunny_*.qm
+    install (DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations
+             DESTINATION "/usr/local/${project_name}"
+             FILES_MATCHING PATTERN "*.qm"
+             )
+
+    # - install /usr/local/Sunny/resources folder
+    install (DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources
+             DESTINATION "/usr/local/${project_name}"
+             FILES_MATCHING PATTERN "*.*"
+             )
+
+    # [/usr/lib] - install /usr/lib/libWindowsRect.so
+    # 在 openKylin 1.0.1 1.0.2 系统下有些不一样，其值是 /usr/lib64，运行失败找不到库，解决方案需要将其替换，一共三处 ${CMAKE_INSTALL_LIBDIR} → "/usr/lib"
+    #
+    #install (FILES ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libWindowsRect.so
+    #         DESTINATION "/usr/lib"           # "/usr/lib" -> ${CMAKE_INSTALL_LIBDIR}  一共三处
+    #         )
+    # [/usr/bin] -------------------------
+    # install /usr/bin/Sunny
+    install (TARGETS ${project_name}
+             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+             LIBRARY DESTINATION "/usr/lib"
+             ARCHIVE DESTINATION "/usr/lib" COMPONENT Devel
+             )
+
+    message("---------->:" ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/*.so)
+    message("---------->RUNTIME:" ${RUNTIME})
+    message("---------->LIBRARY:" ${LIBRARY})
+    message("---------->ARCHIVE:" ${ARCHIVE})
+    message("---------->CMAKE_INSTALL_BINDIR:" ${CMAKE_INSTALL_BINDIR})
+    message("---------->CMAKE_INSTALL_LIBDIR:" ${CMAKE_INSTALL_LIBDIR})
+    message("---------->qm:" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations")
+
+    # CPACK: General Settings
+    set(CPACK_GENERATOR "DEB")                                                 # 设置CPack生成DEB包
+    set(CPACK_PACKAGE_NAME "${project_name}")
+    set(CPACK_PACKAGE_VERSION "${project_version}")
+    set(CPACK_PACKAGE_VENDOR "https://github.com/XMuli/myapp-template")
+    set(CPACK_PACKAGE_CONTACT "https://myapp-template.xmuli.tech")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "XMuli <xmulitech@gmail.com>")         # 设置维护者信息
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "myapp-template is a clean and beautiful sample desktop application template for Windows, MacOS and Linux..")
+    set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}")
+
+    # 指定 post-install 脚本文件;  ~/.config/Sunny 文件夹删除 → postinst-安装时删除;  postrm-卸载时删除
+    # set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/debian/postinst;${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/debian/postrm")
+
+    # 设置Debian软件包的依赖关系
+    set(CPACK_DEBIAN_PACKAGE_SHILIBDEPS ON)
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5x11extras5, libqt5widgets5, libqt5xml5, libqt5svg5, libqt5network5")
+#    set (CPACK_SYSTEM_NAME "${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+
+    include(CPack)
+endif()
+
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${project_name})

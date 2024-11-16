@@ -1,4 +1,4 @@
-﻿// SPDX-FileCopyrightText: 2023-2024 XMuli
+// SPDX-FileCopyrightText: 2023-2024 XMuli
 // SPDX-GitHub: https://github.com/XMuli
 // SPDX-Author: XMuli <xmulitech@gmail.com>
 #include <QApplication>

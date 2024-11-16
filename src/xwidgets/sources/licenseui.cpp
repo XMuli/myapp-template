@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2024-2024 XMuli
 // SPDX-GitHub: https://github.com/XMuli
 // SPDX-Author: XMuli <xmulitech@gmail.com>

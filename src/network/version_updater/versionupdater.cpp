@@ -1,4 +1,4 @@
-﻿#include "versionupdater.h"
+#include "versionupdater.h"
 #include <QNetworkRequest>
 #include <QMessageBox>
 #include <QUrl>

@@ -1,4 +1,4 @@
-﻿#include "settingnavui.h"
+#include "settingnavui.h"
 #include "ui_settingnavui.h"
 #include "ui_sub_general.h"
 #include "ui_sub_update.h"

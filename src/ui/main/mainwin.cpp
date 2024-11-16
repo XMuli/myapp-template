@@ -1,4 +1,4 @@
-﻿#include "mainwin.h"
+#include "mainwin.h"
 #include "ui_mainwin.h"
 #include <QString>
 #include "../tray/tray.h"

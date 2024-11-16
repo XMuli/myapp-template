@@ -1,4 +1,4 @@
-﻿#include "settingui.h"
+#include "settingui.h"
 #include "ui_settingui.h"
 #include "ui_sub_general.h"
 #include "ui_sub_update.h"

@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=Graphics;
+Comment=myapp-template is a clean and beautiful sample desktop application template for Windows, MacOS and Linux.
+Comment[zh_CN]=myapp-template 是一款简洁且漂亮的桌面应用程序模板示例，支持 Windows，MacOS，Linux 平台
+Comment[pt_BR]=myapp-template é um modelo de aplicativo de desktop limpo e bonito para Windows, MacOS e Linux.
+Exec=Sunny
+GenericName=myapp-template
+GenericName[zh_CN]=myapp-template
+GenericName[pt_BR]=myapp-template
+Icon=tech.xmuli.myapp-template
+Keywords=myapp-template;qt;example;qt;XMuli;偕臧
+MimeType=image/bmp;image/bmp24;image/jpg;image/jpe;image/jpeg;image/jpeg24;image/jng;image/pcd;image/pcx;image/png;image/tif;image/tiff;image/tiff24;image/dds;image/gif;image/sgi;image/j2k;image/jp2;image/pct;image/wdp;image/arw;image/icb;image/dng;image/vda;image/vst;image/svg;image/ptif;image/mef;image/xbm;image/svg+xml;
+Name=myapp-template
+Name[zh_CN]=myapp-template
+Name[pt_BR]=myapp-template
+StartupNotify=false
+Type=Application
+Terminal=false

@@ -30,3 +30,13 @@ execute_process(COMMAND "C:/Qt/5.15.2/msvc2019_64/bin/uic.exe" -o "ui_sub_about.
 - **拉升比例为 1 也行**，10 的话若是某些组合控件，则会有一定高度，导致是会有总的最小高度是会增高的，
 
 ![image-20240809153051696](./assets/image-20240809153051696.png)
+
+
+
+$ find ./ -type f -exec dos2unix {} \;
+$ mkdir bin
+$ cd bin/
+$ cmake ../ -DCMAKE_BUILD_TYPE=Release
+$ make -j16
+$ cpack -G DEB
+
