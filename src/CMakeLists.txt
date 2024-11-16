@@ -4,9 +4,9 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-set(project_name myapp-qt-template)
+set(project_name myapp-template)
 set(project_version_major 1)
-set(project_version_minor 0)
+set(project_version_minor 1)
 set(project_version_path 0)
 set(project_version ${project_version_major}.${project_version_minor}.${project_version_path})
 project(${project_name} VERSION ${project_version} LANGUAGES CXX)
@@ -36,6 +36,10 @@ set(src_files
     ui/setting/settingui.h
     ui/setting/settingui.cpp
     ui/setting/settingui.ui
+    ui/setting/settingnavui.h
+    ui/setting/settingnavui.cpp
+    ui/setting/settingnavui.ui
+
     ui/setting/sub_general.ui
     ui/setting/sub_update.ui
     ui/setting/sub_about.ui

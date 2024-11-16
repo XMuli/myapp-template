@@ -34,37 +34,42 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="63"/>
-        <source>Setting</source>
-        <translation>設置</translation>
+        <location filename="../ui/main/mainwin.ui" line="50"/>
+        <source>Setting (tabpage)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="70"/>
+        <location filename="../ui/main/mainwin.ui" line="57"/>
+        <source>Setting (navigation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/main/mainwin.ui" line="77"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="90"/>
+        <location filename="../ui/main/mainwin.ui" line="97"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="96"/>
+        <location filename="../ui/main/mainwin.ui" line="103"/>
         <source>Help</source>
         <translation>幫助</translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="106"/>
+        <location filename="../ui/main/mainwin.ui" line="113"/>
         <source>Open</source>
         <translation>打開</translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="111"/>
+        <location filename="../ui/main/mainwin.ui" line="118"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.cpp" line="42"/>
+        <location filename="../ui/main/mainwin.cpp" line="38"/>
         <source>My app template by Qt %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -107,11 +112,6 @@ The birth of this project is inseparable from these open source software</source
     <message>
         <location filename="../ui/setting/settingnavui.cpp" line="42"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/settingnavui.cpp" line="43"/>
-        <source>OCR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -173,27 +173,27 @@ The birth of this project is inseparable from these open source software</source
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="69"/>
+        <location filename="../ui/setting/settingui.cpp" line="68"/>
         <source>No Proxy</source>
         <translation type="unfinished">不使用系統代理</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="70"/>
+        <location filename="../ui/setting/settingui.cpp" line="69"/>
         <source>System Proxy</source>
         <translation type="unfinished">系統代理</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="148"/>
+        <location filename="../ui/setting/settingui.cpp" line="147"/>
         <source>%1-bit</source>
         <translation>%1-位</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="149"/>
+        <location filename="../ui/setting/settingui.cpp" line="148"/>
         <source>Version %1 (%2) - %3 %4</source>
         <translation>版本 %1 (%2) - %3 %4</translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="158"/>
+        <location filename="../ui/setting/settingui.cpp" line="157"/>
         <source>Select Font</source>
         <translation>選擇字體</translation>
     </message>
@@ -310,47 +310,52 @@ The birth of this project is inseparable from these open source software</source
 <context>
     <name>Tray</name>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <location filename="../ui/tray/tray.cpp" line="91"/>
         <source>%1 is runing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 正在運行中</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <location filename="../ui/tray/tray.cpp" line="91"/>
         <source>You can control it via the tray icon.</source>
-        <translation type="unfinished"></translation>
+        <translation>您可以通過托盤圖標對其進行控制。</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="150"/>
+        <location filename="../ui/tray/tray.cpp" line="191"/>
         <source>this is my app.</source>
         <translation>這是我的應用程序。</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="151"/>
-        <source>function1</source>
-        <translation type="unfinished"></translation>
+        <location filename="../ui/tray/tray.cpp" line="192"/>
+        <source>function1 empty</source>
+        <translation>測試功能1</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="152"/>
-        <source>function2</source>
-        <translation type="unfinished"></translation>
+        <location filename="../ui/tray/tray.cpp" line="193"/>
+        <source>function2 empty</source>
+        <translation>測試功能2</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="153"/>
+        <location filename="../ui/tray/tray.cpp" line="195"/>
+        <source>Setting (tabpage)</source>
+        <translation>設置（經典-標籤頁）</translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="196"/>
+        <source>Setting (navigation)</source>
+        <translation>設置（現代-樹導航欄）</translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="194"/>
         <source>Open Main Windows</source>
         <translation>打開主窗口</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="154"/>
-        <source>Setting</source>
-        <translation>設置</translation>
-    </message>
-    <message>
-        <location filename="../ui/tray/tray.cpp" line="155"/>
+        <location filename="../ui/tray/tray.cpp" line="197"/>
         <source>Restart</source>
         <translation>重啟</translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="156"/>
+        <location filename="../ui/tray/tray.cpp" line="198"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -360,23 +365,24 @@ The birth of this project is inseparable from these open source software</source
     <message>
         <location filename="../network/version_updater/versionupdater.cpp" line="119"/>
         <source>Update Available</source>
-        <translation type="unfinished"></translation>
+        <translation>版本更新</translation>
     </message>
     <message>
         <location filename="../network/version_updater/versionupdater.cpp" line="119"/>
         <source>A new version %1 is available. Do you want to download it?
 download link: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>檢測到一個新版本 %1 ，你是否想下載它？
+下載鏈接: %2</translation>
     </message>
     <message>
         <location filename="../network/version_updater/versionupdater.cpp" line="123"/>
         <source>No Update</source>
-        <translation type="unfinished"></translation>
+        <translation>無可用更新</translation>
     </message>
     <message>
         <location filename="../network/version_updater/versionupdater.cpp" line="123"/>
         <source>You are already on the latest version.</source>
-        <translation type="unfinished"></translation>
+        <translation>你已經是最新版本。</translation>
     </message>
 </context>
 </TS>

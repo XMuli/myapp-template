@@ -17,7 +17,6 @@ class Tray : public QObject
     Q_OBJECT
 
 public:
-    void openWindow();
     void setAppFont(const QString& tFont);
 
 private:
@@ -26,7 +25,9 @@ private:
 public slots:
     void onFunction1();
     void onMainWin();
-    void onSetting();
+    void onSettingTab();
+    void onSettingNav();
+
     void onRestart();
     void onShowSystemMessagebox(const QString &title, const QString &msg, const int &msecs = 6000); // 系统消息通知
     void onTrayIcon(QSystemTrayIcon::ActivationReason reason);
@@ -50,7 +51,8 @@ protected:
 private:
     QPointer<QMenu>                  m_trayMenu;
     QPointer<QSystemTrayIcon>        m_trayIcon;
-    QPointer<SettingUI>              m_setting;
+    QPointer<SettingUI>              m_settingTab;
+    QPointer<SettingNavUI>           m_settingNav;
     QPointer<MainWin>                m_mainWin;
 };
 

@@ -33,37 +33,42 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="63"/>
-        <source>Setting</source>
+        <location filename="../ui/main/mainwin.ui" line="50"/>
+        <source>Setting (tabpage)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="70"/>
+        <location filename="../ui/main/mainwin.ui" line="57"/>
+        <source>Setting (navigation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/main/mainwin.ui" line="77"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="90"/>
+        <location filename="../ui/main/mainwin.ui" line="97"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="96"/>
+        <location filename="../ui/main/mainwin.ui" line="103"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="106"/>
+        <location filename="../ui/main/mainwin.ui" line="113"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.ui" line="111"/>
+        <location filename="../ui/main/mainwin.ui" line="118"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main/mainwin.cpp" line="42"/>
+        <location filename="../ui/main/mainwin.cpp" line="38"/>
         <source>My app template by Qt %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -106,11 +111,6 @@ The birth of this project is inseparable from these open source software</source
     <message>
         <location filename="../ui/setting/settingnavui.cpp" line="42"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/setting/settingnavui.cpp" line="43"/>
-        <source>OCR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -172,27 +172,27 @@ The birth of this project is inseparable from these open source software</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="69"/>
+        <location filename="../ui/setting/settingui.cpp" line="68"/>
         <source>No Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="70"/>
+        <location filename="../ui/setting/settingui.cpp" line="69"/>
         <source>System Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="148"/>
+        <location filename="../ui/setting/settingui.cpp" line="147"/>
         <source>%1-bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="149"/>
+        <location filename="../ui/setting/settingui.cpp" line="148"/>
         <source>Version %1 (%2) - %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/setting/settingui.cpp" line="158"/>
+        <location filename="../ui/setting/settingui.cpp" line="157"/>
         <source>Select Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -309,47 +309,52 @@ The birth of this project is inseparable from these open source software</source
 <context>
     <name>Tray</name>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <location filename="../ui/tray/tray.cpp" line="91"/>
         <source>%1 is runing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="90"/>
+        <location filename="../ui/tray/tray.cpp" line="91"/>
         <source>You can control it via the tray icon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="150"/>
+        <location filename="../ui/tray/tray.cpp" line="191"/>
         <source>this is my app.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="151"/>
-        <source>function1</source>
+        <location filename="../ui/tray/tray.cpp" line="192"/>
+        <source>function1 empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="152"/>
-        <source>function2</source>
+        <location filename="../ui/tray/tray.cpp" line="193"/>
+        <source>function2 empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="153"/>
+        <location filename="../ui/tray/tray.cpp" line="195"/>
+        <source>Setting (tabpage)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="196"/>
+        <source>Setting (navigation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/tray/tray.cpp" line="194"/>
         <source>Open Main Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="154"/>
-        <source>Setting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/tray/tray.cpp" line="155"/>
+        <location filename="../ui/tray/tray.cpp" line="197"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/tray/tray.cpp" line="156"/>
+        <location filename="../ui/tray/tray.cpp" line="198"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

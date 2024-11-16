@@ -45,6 +45,20 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QPushButton" name="btn_setting_tab">
+         <property name="text">
+          <string>Setting (tabpage)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_setting_nav">
+         <property name="text">
+          <string>Setting (navigation)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
@@ -58,14 +72,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Setting</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="btn_exit">
          <property name="text">
           <string>Exit</string>
          </property>

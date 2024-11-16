@@ -40,9 +40,9 @@ void SettingNavUI::initUI()
     auto& stacked = ui->stackedWidget;
     QTreeWidgetItem* itemGeneral = new QTreeWidgetItem(tree, QStringList(tr("General")));
     QTreeWidgetItem* itemInterface = new QTreeWidgetItem(tree, QStringList(tr("Interface")));
-    QTreeWidgetItem* itemOCR = new QTreeWidgetItem(tree, QStringList(tr("OCR")));
-        QTreeWidgetItem* itemExtractText = new QTreeWidgetItem(itemOCR, QStringList(tr("Extract text")));
-        QTreeWidgetItem* itemImageTrans = new QTreeWidgetItem(itemOCR, QStringList(tr("Image translation")));
+    // QTreeWidgetItem* itemOCR = new QTreeWidgetItem(tree, QStringList(tr("OCR")));
+        QTreeWidgetItem* itemExtractText = new QTreeWidgetItem(tree, QStringList(tr("Extract text")));
+        QTreeWidgetItem* itemImageTrans = new QTreeWidgetItem(tree, QStringList(tr("Image translation")));
     QTreeWidgetItem* itemOutput = new QTreeWidgetItem(tree, QStringList(tr("Output")));
     QTreeWidgetItem* itemShortcuts = new QTreeWidgetItem(tree, QStringList(tr("Shortcuts")));
     QTreeWidgetItem* itemInfo = new QTreeWidgetItem(tree, QStringList(tr("Info")));

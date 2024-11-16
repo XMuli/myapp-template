@@ -16,7 +16,9 @@ public:
     ~MainWin();
 
 private slots:
-    void on_pushButton_released();
+    void on_btn_setting_tab_released();
+    void on_btn_setting_nav_released();
+    void on_btn_exit_released();
 
 private:
     void initUI();

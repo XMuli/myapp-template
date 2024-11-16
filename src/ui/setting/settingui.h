@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <QBoxLayout>
 
-
-
 namespace Ui {
 class SettingUI;
 class SubGeneral;
