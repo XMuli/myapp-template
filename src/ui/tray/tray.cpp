@@ -39,16 +39,14 @@ void Tray::initUI()
     QAction* function1 = new QAction(this);
     QAction* function2 = new QAction(this);
     QAction* mainWin = new QAction(this);
-    QAction* setting_tabpage = new QAction(this);
-    QAction* setting_nav = new QAction(this);
+    QAction* setting = new QAction(this);
 
     QAction* restart = new QAction(this);
     QAction* quit    = new QAction(this);
     function1->setObjectName("act_function1");
     function2->setObjectName("act_function2");
     mainWin->setObjectName("actMainWin");
-    setting_tabpage->setObjectName("actSettingTab");
-    setting_nav->setObjectName("actSettingNav");
+    setting->setObjectName("actSettingTab");
     restart->setObjectName("actRestart");
     quit->setObjectName("actQuit");
 
@@ -56,8 +54,7 @@ void Tray::initUI()
     m_trayMenu->addAction(function2);
     m_trayMenu->addSeparator();
     m_trayMenu->addAction(mainWin);
-    m_trayMenu->addAction(setting_tabpage);
-    m_trayMenu->addAction(setting_nav);
+    m_trayMenu->addAction(setting);
     m_trayMenu->addSeparator();
     m_trayMenu->addAction(restart);
     m_trayMenu->addAction(quit);
@@ -76,8 +73,7 @@ void Tray::initUI()
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &Tray::onTrayIcon);
     connect(function1, &QAction::triggered, this, &Tray::onFunction1);
     connect(mainWin, &QAction::triggered, this, &Tray::onMainWin);
-    connect(setting_tabpage, &QAction::triggered, this, &Tray::onSettingTab);
-    connect(setting_nav, &QAction::triggered, this, &Tray::onSettingNav);
+    connect(setting, &QAction::triggered, this, &Tray::onSetting);
     connect(restart, &QAction::triggered, this, &Tray::onRestart);
     connect(quit, &QAction::triggered, [](){ qApp->quit(); });
     connect(&COMM, &Communication::sigLanguageChange, this, [this]() { onLanguageChange("");});
@@ -122,7 +118,7 @@ void Tray::onMainWin()
     }
 }
 
-void Tray::onSettingTab()
+void Tray::onSetting()
 {
     if (!m_settingTab) m_settingTab = new SettingUI();
     // m_settingTab->adjustSize();
@@ -140,23 +136,6 @@ void Tray::onSettingTab()
     }
 }
 
-void Tray::onSettingNav()
-{
-    if (!m_settingNav) m_settingNav = new SettingNavUI();
-    m_settingNav->show();
-
-    // 获取鼠标所在屏幕的几何信息
-    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
-    if (screen)
-    {
-        QRect screenGeometry = screen->geometry();
-        QSize windowSize = m_settingNav->size();
-        int x = screenGeometry.width() * 2 / 3 - windowSize.width() / 2;
-        int y = screenGeometry.height() / 2 - windowSize.height() / 2;
-        m_settingNav->move(x, y);
-    }
-}
-
 void Tray::onRestart()
 {
     const QString& path = qApp->applicationFilePath();
@@ -166,7 +145,6 @@ void Tray::onRestart()
 
 void Tray::onShowSystemMessagebox(const QString &title, const QString &msg, const int& msecs)
 {
-    m_trayIcon->showMessage(title, msg, QIcon(":/resources/logo/logo.svg"), msecs);
     m_trayIcon->showMessage(title, msg, QIcon(":/logo/logo.svg"), msecs);
 }
 
@@ -184,7 +162,6 @@ void Tray::onLanguageChange(const QString qmName)
     QAction * act_function2 = findChild<QAction*>("act_function2");
     QAction * actMainWin = findChild<QAction*>("actMainWin");
     QAction * actSettingTab = findChild<QAction*>("actSettingTab");
-    QAction * actSettingNav = findChild<QAction*>("actSettingNav");
     QAction * actRestart = findChild<QAction*>("actRestart");
     QAction * actQuit = findChild<QAction*>("actQuit");
 
@@ -193,7 +170,6 @@ void Tray::onLanguageChange(const QString qmName)
     if (act_function2) act_function2->setText(tr("function2 empty"));
     if (actMainWin) actMainWin->setText(tr("Open Main Windows"));
     if (actSettingTab) actSettingTab->setText(tr("Setting (tabpage)"));
-    if (actSettingNav) actSettingNav->setText(tr("Setting (navigation)"));
     if (actRestart) actRestart->setText(tr("Restart"));
     if (actQuit) actQuit->setText(tr("Quit"));
 }
@@ -203,7 +179,6 @@ Tray::Tray(QObject *parent)
     , m_trayMenu(new QMenu())
     , m_trayIcon(new QSystemTrayIcon(this))
     , m_settingTab(nullptr)
-    , m_settingNav(nullptr)
     , m_mainWin(nullptr)
 {
     initUI();
@@ -214,7 +189,6 @@ Tray::~Tray()
     if (m_trayMenu) m_trayMenu->deleteLater();
     if (m_trayIcon) m_trayIcon->deleteLater();
     if (m_settingTab) m_settingTab->deleteLater();
-    if (m_settingNav) m_settingNav->deleteLater();
     if (m_mainWin) m_mainWin->deleteLater();
     CJ.onSyncToFile();
 }

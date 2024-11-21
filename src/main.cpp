@@ -32,8 +32,7 @@ int main(int argc, char *argv[])
     COMM.loadTranslation("");
     TRAY;
     TRAY.onMainWin();
-    TRAY.onSettingTab();
-    // TRAY.onSettingNav();
+    TRAY.onSetting();
 
     systemSemaphore.release();
     return a.exec();

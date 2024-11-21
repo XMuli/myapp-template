@@ -36,9 +36,6 @@ set(src_files
     ui/setting/settingui.h
     ui/setting/settingui.cpp
     ui/setting/settingui.ui
-    ui/setting/settingnavui.h
-    ui/setting/settingnavui.cpp
-    ui/setting/settingnavui.ui
 
     ui/setting/sub_general.ui
     ui/setting/sub_update.ui
