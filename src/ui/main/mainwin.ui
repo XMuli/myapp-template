@@ -45,16 +45,9 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="btn_setting_tab">
+        <widget class="QPushButton" name="btn_setting">
          <property name="text">
-          <string>Setting (tabpage)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_setting_nav">
-         <property name="text">
-          <string>Setting (navigation)</string>
+          <string>Setting</string>
          </property>
         </widget>
        </item>
@@ -89,7 +82,7 @@
      <x>0</x>
      <y>0</y>
      <width>695</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -6,7 +6,6 @@
 #include <QPointer>
 #include <QSystemTrayIcon>
 #include "../setting/settingui.h"
-#include "../setting/settingnavui.h"
 #include "../main/mainwin.h"
 
 
@@ -25,8 +24,7 @@ private:
 public slots:
     void onFunction1();
     void onMainWin();
-    void onSettingTab();
-    void onSettingNav();
+    void onSetting();
 
     void onRestart();
     void onShowSystemMessagebox(const QString &title, const QString &msg, const int &msecs = 6000); // 系统消息通知
@@ -52,7 +50,6 @@ private:
     QPointer<QMenu>                  m_trayMenu;
     QPointer<QSystemTrayIcon>        m_trayIcon;
     QPointer<SettingUI>              m_settingTab;
-    QPointer<SettingNavUI>           m_settingNav;
     QPointer<MainWin>                m_mainWin;
 };
 

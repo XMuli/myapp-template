@@ -43,15 +43,9 @@ void MainWin::initUI()
     setWindowTitle(tr("My app template by Qt %1").arg(QT_VERSION_STR));
 }
 
-void MainWin::on_btn_setting_tab_released()
+void MainWin::on_btn_setting_released()
 {
-    TRAY.onSettingTab();
-}
-
-
-void MainWin::on_btn_setting_nav_released()
-{
-    TRAY.onSettingNav();
+    TRAY.onSetting();
 }
 
 
