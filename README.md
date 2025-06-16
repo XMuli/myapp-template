@@ -55,12 +55,12 @@ Refer to the steps for Linux and Windows. Both approaches should work for succes
 
 ### **Windows**
 - Supported versions: Windows 7 / 8 / 10 / 11
-<img src="assets/windows11.jpg" width="70%"/>
+<img src="assets/windows11.jpg" width="100%"/>
 
 ### **Linux**
 - Supported distributions: Debian 12, Deepin 20.9-v23, Ubuntu 22.04-24.04
-<img src="assets/Debian12.jpg" width="70%"/>
-<img src="assets/Deepin20.9.jpg" width="70%"/>
+<img src="assets/Debian12.jpg" width="100%"/>
+<img src="assets/Deepin20.9.jpg" width="100%"/>
 
 ## Who is Using this Project?
 
